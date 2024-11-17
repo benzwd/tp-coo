@@ -1,4 +1,57 @@
-package main.java;
+public abstract class Personnage implements IPersonnage {
+    private final int NOMBRE_ATTAQUE;
+    private String name;
+    private int pv;
+    private int forceAttaque; 
 
-public class Personnage implements Ipersonnage {
+
+    public Personnage(String name, int pv, int forceAttaque, int nombreAttaque) {
+        this.NOMBRE_ATTAQUE = nombreAttaque;
+        this.name = name;
+        this.pv = pv;
+        this.forceAttaque = forceAttaque;
+    }
+
+    public int getNombreAttaque(){
+        return this.NOMBRE_ATTAQUE;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPv() {
+        return this.pv;
+    }
+
+    public void setPv(int pv) {
+        this.pv = pv;
+    }
+
+    public int getForceAttaque() {
+        return this.forceAttaque;
+    }
+
+    public void setForceAttaque(int forceAttaque) {
+        this.forceAttaque = forceAttaque;
+    }
+
+    public boolean estMort(){
+        return getPv() <= 0;
+    }
+
+    // Méthodes liées à la fonctionnalité Attaque
+    public int nombreAttaque(){
+        return (int) (Math.random() * this.getNombreAttaque() + 1);
+    }
+
+    public void attaque(Personnage e) {
+        for(int i = 0; i <= nombreAttaque(); i ++){
+            e.setPv(pv - this.getForceAttaque());
+        }
+    }
 }

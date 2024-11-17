@@ -1,5 +1,3 @@
-package main.java;
-
-public interface Ipersonnage {
-
+public interface IPersonnage {
+    public void attaque(Personnage e);
 }
