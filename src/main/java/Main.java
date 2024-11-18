@@ -1,10 +1,12 @@
 public class Main {
     public static void main(String[] args) {
-        Heros h = new Heros("Benjamin", 10,5,null);
+        Heros h = new Heros("Benjamin", 10,1,null);
         Ennemi e = new Ennemi("Mechant", 5, 1, null);
 
+        int[] tab = new int[1000];
+
         for(int i = 0; i < 100; i++){
-            System.out.println(h.nombreAttaque());
+            tab[i] = h.nombreAttaque();
         }
 
         System.out.println(e.getName() + " : " + e.getPv() + " pv restant");

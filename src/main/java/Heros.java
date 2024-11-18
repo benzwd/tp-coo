@@ -36,4 +36,16 @@ public class Heros extends Personnage {
     public void setAUtiliseSaCapaciteSpeciale(boolean aUtiliseSaCapaciteSpeciale) {
         this.aUtiliseSaCapaciteSpeciale = aUtiliseSaCapaciteSpeciale;
     }
+
+    public boolean choixJoueur(){
+        return true; // fonction qui va afficher : "Veux tu utiliser la capacité spéciale de ton heros" => O (oui) ~ N (non) et va etre implémenté dans la surcharge de la méthode attaque
+    }
+
+    public void attaque(Personnage e) {
+        if(choixJoueur()){
+            // utilisation de sa capacité spéciale
+        }else{
+            super.attaque(e);
+        }
+    }
 }

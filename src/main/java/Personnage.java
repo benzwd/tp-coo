@@ -46,12 +46,16 @@ public abstract class Personnage implements IPersonnage {
 
     // Méthodes liées à la fonctionnalité Attaque
     public int nombreAttaque(){
-        return (int) (Math.random() * this.getNombreAttaque() + 1);
+        return (int) (Math.random() * this.NOMBRE_ATTAQUE + 1);
+    }
+
+    public void afficherPvRestant(){
+        System.out.println(this.name + " a " + this.pv + " pv restant");
     }
 
     public void attaque(Personnage e) {
         for(int i = 0; i <= nombreAttaque(); i ++){
-            e.setPv(pv - this.getForceAttaque());
+            e.setPv(e.pv - this.forceAttaque);
         }
     }
 }
