@@ -6,7 +6,6 @@ public class Ennemi extends Personnage {
         this.TYPE = type;
     }
 
-
     public Type getType() {
         return this.TYPE;
     }

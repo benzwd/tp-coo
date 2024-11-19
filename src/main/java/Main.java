@@ -1,16 +1,18 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         Heros h = new Heros("Benjamin", 10,1,null);
-        Ennemi e = new Ennemi("Mechant", 5, 1, null);
+        Ennemi e = new Ennemi("Mechant", 5, 1, Type.BRIGAND);
+        Ennemi e1 = new Ennemi("Mechant 2", 10, 2, Type.GANGSTER);
 
-        int[] tab = new int[1000];
+        List<Ennemi> l = new ArrayList<>(); 
+        l.add(e);
+        l.add(e1);
 
-        for(int i = 0; i < 100; i++){
-            tab[i] = h.nombreAttaque();
-        }
 
-        System.out.println(e.getName() + " : " + e.getPv() + " pv restant");
-        h.attaque(e);
-        System.out.println(e.getName() + " : " + e.getPv() + " pv restant");
+        Combat combat = new Combat(l, h);
+        combat.derouleLesCombats();
     }
 }

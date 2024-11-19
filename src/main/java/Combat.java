@@ -52,16 +52,19 @@ public class Combat {
                 }
             }
         }
+        if(heros.estMort()){
+            heros.afficherPvRestant();
+        }else{
+            e.afficherPvRestant();
+        }
     }
 
-    public void derouleCombatComplet(){
+    public void derouleLesCombats(){
         while (!this.estTerminer()) {
             derouleUnCombat(ennemis.get(0));
             ennemis.remove(0);
         }
-        if(heros.estMort()){
-            heros.afficherPvRestant();
-        }else{
+        if(!heros.estMort()){
             System.out.println("Vous avez gagné le combat");
         }
     }

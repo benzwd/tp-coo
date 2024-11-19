@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Heros extends Personnage {
    private final int ID;
    private static int increment = 0;
@@ -38,12 +40,23 @@ public class Heros extends Personnage {
     }
 
     public boolean choixJoueur(){
-        return true; // fonction qui va afficher : "Veux tu utiliser la capacité spéciale de ton heros" => O (oui) ~ N (non) et va etre implémenté dans la surcharge de la méthode attaque
+        Scanner entreJoueur = new Scanner(System.in);
+
+        System.out.println("Souhaites-tu utiliser la capacité spéciale de ton héros ? (Oui ou Non)");
+
+        String reponse = entreJoueur.nextLine();
+        entreJoueur.close();
+        return reponse.charAt(0) == 'O' || reponse.charAt(0) == 'o';
+    }
+
+    public void utilisationCapaciteSpeciale(){
+        // proposition : faire une méthode dans l'enum CapaciteSpeciale qui boucle en fonction des capacité, cad si il esquive pendant 2 tours les balles, il doit attaquer deux fois, si il se soigne on augmente ses pv, si il oneshot ses ennemis on fait un while il est pas mort
     }
 
     public void attaque(Personnage e) {
-        if(choixJoueur()){
-            // utilisation de sa capacité spéciale
+        if(this.aUtiliseSaCapaciteSpeciale && choixJoueur()){
+            this.aUtiliseSaCapaciteSpeciale = true;
+            // utilisation de la capacité spéciale
         }else{
             super.attaque(e);
         }
