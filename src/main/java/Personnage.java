@@ -1,4 +1,7 @@
+import java.util.logging.Logger;
+
 public abstract class Personnage implements IPersonnage {
+    private static final Logger logger = Logger.getLogger(Personnage.class.getName());
     private final int NOMBRE_ATTAQUE;
     private String name;
     private int pv;

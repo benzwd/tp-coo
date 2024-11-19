@@ -1,10 +1,13 @@
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Heros extends Personnage {
-   private final int ID;
-   private static int increment = 0;
-   private CapaciteSpeciale capaciteSpeciale;
-   private boolean aUtiliseSaCapaciteSpeciale;
+    private static final Logger logger = Logger.getLogger(Heros.class.getName());
+    private final int ID;
+    private static int increment = 0;
+    private CapaciteSpeciale capaciteSpeciale;
+    private boolean aUtiliseSaCapaciteSpeciale;
+
 
 
     public Heros(String name, int pv, int forceAttaque, CapaciteSpeciale capaciteSpeciale) {

@@ -1,6 +1,8 @@
 import java.util.List;
+import java.util.logging.*;
 
 public class Combat {
+    private static final Logger logger = Logger.getLogger(Combat.class.getName());
     private List<Ennemi> ennemis;
     private Heros heros;
 
