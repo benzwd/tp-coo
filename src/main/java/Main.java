@@ -25,6 +25,10 @@ public class Main {
         l.add(e);
         l.add(e1);
 
+        Carte carte = new Carte("MapMonde", 40);
+        carte.placeHero(h);
+        carte.afficherCarte();
+
 
         Combat combat = new Combat(l, h);
         combat.derouleLesCombats();
