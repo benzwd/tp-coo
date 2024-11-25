@@ -1,11 +1,12 @@
 import java.util.logging.*;
+import java.util.List;
 public class Carte {
     private static final Logger logger = Logger.getLogger(Carte.class.getName());
     private final String nom;
     private final int longueur;
     private final int positionDepart;
     private final int positionArrivee;
-    private int positionHero = 1;
+    private final int positionHero = 1;
     private final String[] env;
 
     public Carte(String nom, int longueur) {
@@ -37,9 +38,9 @@ public class Carte {
         for(int i=0; i<longueur; i++){
             env[i] = "_";
         }
-        env[positionDepart] = "[DÉBUT]";
+        env[positionDepart] = "[DEBUT]";
         env[positionArrivee] = "[FIN]";
-        logger.info("Initialisation de la carte " + nom + " de " + longueur + ".");
+        logger.info("Initialisation de la carte " + nom + " de longueur" + longueur + ".");
     }
 
     public void afficherCarte() {
@@ -47,12 +48,23 @@ public class Carte {
             System.out.print(caseCarte);
         }
         System.out.println();
-        logger.info("Affichage de la carte " + nom + " de " + longueur + ".");
+        logger.info("Affichage de la carte " + nom + " de longueur " + longueur + ".");
     }
 
-    public void placeHero(Heros h){
-        if(positionHero >= 0 && positionHero < longueur){
+    public void placerHero(Heros h){
+        if(positionHero < longueur){
             env[positionHero] = "[" + h.getName() + "]";
+        }
+        logger.info("Hero " + h.getName() + " placé sur la carte à la position " + positionHero + ".");
+    }
+
+    public void placerEnnemis(List<Ennemi> ennemis){
+        for(Ennemi en : ennemis){
+            int position = (int)(Math.random() * longueur + 1);
+            if(position >= 0 && position < longueur && env[position].equals("_")){
+                env[position] = "[" + en.getName() + "]";
+            }
+            logger.info("Ennemi " + en.getName() + " de type " + en.getType() + " placé sur la carte à la position " + position + ".");
         }
     }
 }

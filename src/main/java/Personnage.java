@@ -5,14 +5,17 @@ public abstract class Personnage implements IPersonnage {
     private final int NOMBRE_ATTAQUE;
     private String name;
     private int pv;
-    private int forceAttaque; 
-
+    private int forceAttaque;
+    private int pvActuels;
 
     public Personnage(String name, int pv, int forceAttaque, int nombreAttaque) {
         this.NOMBRE_ATTAQUE = nombreAttaque;
         this.name = name;
         this.pv = pv;
+
         this.forceAttaque = forceAttaque;
+
+        this.pvActuels = pv;
     }
 
     public int getNombreAttaque(){
@@ -64,5 +67,9 @@ public abstract class Personnage implements IPersonnage {
         for(int i = 0; i <= nombreAttaque(); i ++){
             e.setPv(e.pv - this.forceAttaque);
         }
+    }
+
+    public String barreVie(){
+        return "[" + name + "]" + " : [" + "♥".repeat(Math.max(0, (this.pv/10))) + "]";
     }
 }
