@@ -1,15 +1,22 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;
 
 public class Combat {
+    private final int NOMBRE_ENNEMI_MAX = 5;
     private static final Logger logger = Logger.getLogger(Combat.class.getName());
     private List<Ennemi> ennemis;
     private Heros heros;
 
-    public Combat(List<Ennemi> ennemis, Heros heros) {
-        this.ennemis = ennemis;
+    public Combat(Heros heros) {
+        int nbrEnnemis = 1 + (int)(Math.random() * NOMBRE_ENNEMI_MAX + 1);
+        ennemis = new ArrayList<Ennemi>();
+        for(int i = 0; i < nbrEnnemis; i++){
+            ennemis.add(new Ennemi("En",(50 + (int)(Math.random() * ((100 - 50) + 1))), (int)(Math.random() * 3), Type.aleatoire()));
+        }
         this.heros = heros;
     }
+
     
 
     public List<Ennemi> getEnnemis() {

@@ -58,13 +58,13 @@ public class Carte {
         logger.info("Hero " + h.getName() + " placé sur la carte à la position " + positionHero + ".");
     }
 
-    public void placerEnnemis(List<Ennemi> ennemis){
-        for(Ennemi en : ennemis){
+    public void placerCombat(List<Combat> combats){
+        for(Combat c : combats){
             int position = (int)(Math.random() * longueur + 1);
             if(position >= 0 && position < longueur && env[position].equals("_")){
-                env[position] = "[" + en.getName() + "]";
+                env[position] = "[!]";
             }
-            logger.info("Ennemi " + en.getName() + " de type " + en.getType() + " placé sur la carte à la position " + position + ".");
+            logger.info("Groupe d'ennemis placé sur la carte à la position " + position + ".");
         }
     }
 }
