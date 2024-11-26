@@ -42,24 +42,24 @@ public class Heros extends Personnage {
         this.aUtiliseSaCapaciteSpeciale = aUtiliseSaCapaciteSpeciale;
     }
 
-    public boolean choixJoueur(){
-        Scanner entreJoueur = new Scanner(System.in);
-
+    private boolean choixJoueur(Scanner joueurInput){
         System.out.println("Souhaites-tu utiliser la capacité spéciale de ton héros ? (Oui ou Non)");
 
-        String reponse = entreJoueur.nextLine();
-        entreJoueur.close();
+        String reponse = joueurInput.nextLine();
+
+        if(reponse.isEmpty()) return false;
+
         return reponse.charAt(0) == 'O' || reponse.charAt(0) == 'o';
     }
 
-    public void utilisationCapaciteSpeciale(){
+    private void utilisationCapaciteSpeciale(){
         // proposition : faire une méthode dans l'enum CapaciteSpeciale qui boucle en fonction des capacité, cad si il esquive pendant 2 tours les balles, il doit attaquer deux fois, si il se soigne on augmente ses pv, si il oneshot ses ennemis on fait un while il est pas mort
     }
 
     public void attaque(Personnage e) {
-        if(this.aUtiliseSaCapaciteSpeciale && choixJoueur()){
+        if(!this.aUtiliseSaCapaciteSpeciale && choixJoueur(new Scanner(System.in))){
             this.aUtiliseSaCapaciteSpeciale = true;
-            // utilisation de la capacité spéciale
+            utilisationCapaciteSpeciale();
         }else{
             super.attaque(e);
         }

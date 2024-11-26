@@ -10,7 +10,7 @@ public class Combat {
         this.ennemis = ennemis;
         this.heros = heros;
     }
-
+    
 
     public List<Ennemi> getEnnemis() {
         return this.ennemis;
@@ -42,6 +42,8 @@ public class Combat {
     
     private void derouleUnCombat(Ennemi e){
         while(!(heros.estMort() || e.estMort())){
+            heros.afficherPvRestant();
+            e.afficherPvRestant();
             if(herosAttaqueEnPremier(e)){
                 heros.attaque(e);
                 if(!e.estMort()){

@@ -7,8 +7,5 @@ public class Main {
         init();
         Jeu jeu = new Jeu();
         jeu.demarrageJeu();
-//
-//        Combat combat = new Combat(l, h);
-//        combat.derouleLesCombats();
     }
 }
