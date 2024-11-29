@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -6,7 +7,7 @@ public class Heros extends Personnage {
     private final int ID;
     private static int increment = 0;
     private CapaciteSpeciale capaciteSpeciale;
-    private boolean aUtiliseSaCapaciteSpeciale;
+    private boolean aUtiliseSaCapaciteSpeciale = false;
 
 
 
@@ -14,7 +15,6 @@ public class Heros extends Personnage {
         super(name, pv, forceAttaque, 5);
         this.ID = increment ++;
         this.capaciteSpeciale = capaciteSpeciale;
-        this.aUtiliseSaCapaciteSpeciale = false;
     }
 
 
@@ -52,16 +52,27 @@ public class Heros extends Personnage {
         return reponse.charAt(0) == 'O' || reponse.charAt(0) == 'o';
     }
 
-    private void utilisationCapaciteSpeciale(){
-        // proposition : faire une méthode dans l'enum CapaciteSpeciale qui boucle en fonction des capacité, cad si il esquive pendant 2 tours les balles, il doit attaquer deux fois, si il se soigne on augmente ses pv, si il oneshot ses ennemis on fait un while il est pas mort
+    private void utilisationCapaciteSpeciale(List<Ennemi> ennemis){
+        if (this.capaciteSpeciale == CapaciteSpeciale.BARBARE){
+            ennemis.get(0).setPv(ennemis.get(0).getPv() - (3 * this.getForceAttaque()));
+        }else if(this.capaciteSpeciale == CapaciteSpeciale.MAGE){
+            this.setPv((int)(this.getPv() * 1.25));
+            ennemis.get(0).setPv(ennemis.get(0).getPv() - (2 * this.getForceAttaque()));
+        }else if(this.capaciteSpeciale == CapaciteSpeciale.SOIGNEUR){
+            ennemis.get(0).setPv((int)(ennemis.get(0).getPv() * 1.5));
+        }else{
+            while (ennemis.isEmpty()) {
+                ennemis.get(0).setPv(0);;
+            }
+        }
     }
 
-    public void attaque(Personnage e) {
+    public void attaque(Ennemi ennemi ,List<Ennemi> ennemis) {
         if(!this.aUtiliseSaCapaciteSpeciale && choixJoueur(new Scanner(System.in))){
             this.aUtiliseSaCapaciteSpeciale = true;
-            utilisationCapaciteSpeciale();
+            utilisationCapaciteSpeciale(ennemis);
         }else{
-            super.attaque(e);
+            super.attaque(ennemis.get(0));
         }
     }
 }

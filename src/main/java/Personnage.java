@@ -7,15 +7,15 @@ public abstract class Personnage implements IPersonnage {
     private int pv;
     private int forceAttaque;
     private int pvActuels;
+    private boolean porterAttaque;
 
     public Personnage(String name, int pv, int forceAttaque, int nombreAttaque) {
         this.NOMBRE_ATTAQUE = nombreAttaque;
         this.name = name;
         this.pv = pv;
-
         this.forceAttaque = forceAttaque;
-
         this.pvActuels = pv;
+        this.porterAttaque = false;
     }
 
     public int getNombreAttaque(){
@@ -44,6 +44,14 @@ public abstract class Personnage implements IPersonnage {
 
     public void setForceAttaque(int forceAttaque) {
         this.forceAttaque = forceAttaque;
+    }
+
+    public boolean getPorterAttaque() {
+        return this.porterAttaque;
+    }
+
+    public void setPorterAttaque(boolean porterAttaque) {
+        this.porterAttaque = porterAttaque;
     }
 
     public boolean estMort(){

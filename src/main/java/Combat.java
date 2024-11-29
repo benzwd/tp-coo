@@ -47,35 +47,32 @@ public class Combat {
         return e.getType() != Type.GANGSTER;
     }
     
-    private void derouleUnCombat(Ennemi e){
-        while(!(heros.estMort() || e.estMort())){
-            heros.afficherPvRestant();
-            e.afficherPvRestant();
-            if(herosAttaqueEnPremier(e)){
-                heros.attaque(e);
-                if(!e.estMort()){
+    private void derouleCombat(List<Ennemi> ennemis){
+        Ennemi e;
+        while (!this.estTerminer()) {
+            e = ennemis.get(0);
+            while(!(heros.estMort() || e.estMort())){
+                heros.afficherPvRestant();
+                e.afficherPvRestant();
+                if(herosAttaqueEnPremier(e)){
+                    heros.attaque(e, ennemis);
+                    if(!e.estMort()){
+                        e.attaque(heros);
+                    }
+                }else{
                     e.attaque(heros);
-                }
-            }else{
-                e.attaque(heros);
-                if(!heros.estMort()){
-                    heros.attaque(e);
+                    if(!heros.estMort()){
+                        heros.attaque(e);
+                    }
                 }
             }
-        }
-        if(heros.estMort()){
-            heros.afficherPvRestant();
-        }else{
-            e.afficherPvRestant();
-        }
-    }
-
-    public void derouleLesCombats(){
-        while (!this.estTerminer()) {
-            derouleUnCombat(ennemis.get(0));
-            ennemis.remove(0);
-        }
-        if(!heros.estMort()){
+            if(heros.estMort()){
+                heros.afficherPvRestant();
+            }else{
+                e.afficherPvRestant();
+                ennemis.remove(e);
+            }
+        }if(!heros.estMort()){
             System.out.println("Vous avez gagné le combat");
         }
     }
