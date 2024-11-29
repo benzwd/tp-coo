@@ -51,25 +51,12 @@ public class Heros extends Personnage {
         return reponse.charAt(0) == 'O' || reponse.charAt(0) == 'o';
     }
 
-    private void utilisationCapaciteSpeciale(List<Ennemi> ennemis){
-        if (this.capaciteSpeciale == CapaciteSpeciale.BARBARE){
-            ennemis.get(0).setPv(ennemis.get(0).getPv() - (3 * this.getForceAttaque()));
-        }else if(this.capaciteSpeciale == CapaciteSpeciale.MAGE){
-            this.setPv((int)(this.getPv() * 1.25));
-            ennemis.get(0).setPv(ennemis.get(0).getPv() - (2 * this.getForceAttaque()));
-        }else if(this.capaciteSpeciale == CapaciteSpeciale.SOIGNEUR){
-            ennemis.get(0).setPv((int)(ennemis.get(0).getPv() * 1.5));
-        }else{
-            while (ennemis.isEmpty()) {
-                ennemis.get(0).setPv(0);;
-            }
-        }
-    }
+    
 
-    public void attaque(Ennemi ennemi ,List<Ennemi> ennemis) {
+    public void attaque(List<Ennemi> ennemis) {
         if(!this.aUtiliseSaCapaciteSpeciale && choixJoueur(new Scanner(System.in))){
             this.aUtiliseSaCapaciteSpeciale = true;
-            utilisationCapaciteSpeciale(ennemis);
+            CapaciteSpeciale.utilisationCapaciteSpeciale(this,ennemis);
         }else{
             super.attaque(ennemis.get(0));
         }

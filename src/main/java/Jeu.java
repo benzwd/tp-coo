@@ -14,10 +14,14 @@ public class Jeu {
 
         System.out.println("Entrez votre nom : ");
         String heroName = scanner.nextLine();
-
-        System.out.println("Choississez une classe : ");
-        System.out.println("1. Barbare \n2. Mage\n3. Soigneur\n4. Assassin");
+        Jeu.attendre(500);
+        System.out.println("Cartes des différents héros : ");
+        Jeu.attendre(500);
+        CapaciteSpeciale.afficherPossibilites();
+        Jeu.attendre(500);
+        System.out.println("Fais ton choix : (1,2,...)");
         int choixCapacite = scanner.nextInt();
+        Jeu.attendre(500);
         CapaciteSpeciale capacite = switch (choixCapacite){
             case 2 -> CapaciteSpeciale.MAGE;
             case 3 -> CapaciteSpeciale.SOIGNEUR;
@@ -69,11 +73,14 @@ public class Jeu {
             case 1 -> {
                 if(carte.getCase(hero.getPosition() + 1).equals("[!]")){
                     System.out.println("Vous avez rencontré un groupe d'ennemis !");
+                    Jeu.attendre(250);
                     System.out.println("Voulez-vous combattre ou abandonner ?");
+                    Jeu.attendre(250);
                     System.out.println("1. Combattre\n2. Abandonner");
                     int choixCombat = scanner.nextInt();
+                    Jeu.attendre(250);
                     if(choixCombat == 1){
-                        return;
+                        carte.getPositionsCombats().get(hero.getPosition() + 1).derouleCombat();
                     }else {
                         hero.setPv(0);
                         finJeu();
@@ -104,5 +111,13 @@ public class Jeu {
         }
         System.out.println("Merci d'avoir joué !");
         System.exit(0);
+    }
+
+    public static void attendre(int millisecondes) {
+        try {
+            Thread.sleep(millisecondes);
+        } catch (InterruptedException e) {
+            System.err.println("Le thread a été interrompu : " + e.getMessage());
+        }
     }
 }

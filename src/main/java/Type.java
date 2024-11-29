@@ -1,14 +1,26 @@
+import java.util.List;
 import java.util.Random;
 
 public enum Type {
-    BRIGAND,
-    CATCHEUR,
-    GANGSTER;
+    BRIGAND("Brigand"),
+    CATCHEUR("Catcheur"),
+    GANGSTER("Gangster");
 
-    // Méthode pour renvoyer un élément aléatoire
+    private String name;
+
+    private Type(String name){
+            this.name = name;
+    }
+
+    public static void afficherPossibilite(){
+        for (int i = 0; i < Type.values().length; i ++) {
+            System.out.println((i+1) + " : " + Type.values()[i]);
+        }
+    }
+    
     public static Type aleatoire() {
         Random random = new Random();
-        int index = random.nextInt(values().length);  // Génère un indice aléatoire
-        return values()[index];  // Retourne l'élément correspondant à cet indice
+        int index = random.nextInt(values().length);
+        return values()[index];
     }
 }

@@ -47,7 +47,7 @@ public class Combat {
         return e.getType() != Type.GANGSTER;
     }
     
-    private void derouleCombat(List<Ennemi> ennemis){
+    public void derouleCombat(){
         Ennemi e;
         while (!this.estTerminer()) {
             e = ennemis.get(0);
@@ -55,14 +55,18 @@ public class Combat {
                 heros.afficherPvRestant();
                 e.afficherPvRestant();
                 if(herosAttaqueEnPremier(e)){
-                    heros.attaque(e, ennemis);
+                    heros.attaque(ennemis);
+                    Jeu.attendre(500);
                     if(!e.estMort()){
                         e.attaque(heros);
+                        Jeu.attendre(500);
                     }
                 }else{
                     e.attaque(heros);
+                    Jeu.attendre(500);
                     if(!heros.estMort()){
-                        heros.attaque(e);
+                        heros.attaque(ennemis);
+                        Jeu.attendre(500);
                     }
                 }
             }

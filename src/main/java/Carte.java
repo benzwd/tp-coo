@@ -1,4 +1,5 @@
 import java.util.logging.*;
+import java.util.HashMap;
 import java.util.List;
 public class Carte {
     private static final Logger logger = Logger.getLogger(Carte.class.getName());
@@ -7,6 +8,7 @@ public class Carte {
     private final int positionDepart;
     private final int positionArrivee;
     private final String[] env;
+    private HashMap<Integer, Combat> positionsCombats = new HashMap<>();
 
     public Carte(String nom, int longueur) {
         this.nom = nom;
@@ -31,6 +33,10 @@ public class Carte {
 
     public int getPositionArrivee() {
         return positionArrivee;
+    }
+
+    public HashMap<Integer, Combat> getPositionsCombats(){
+        return positionsCombats;
     }
 
     private void initCarte(){
@@ -62,6 +68,7 @@ public class Carte {
         for(Combat c : combats){
             int position = (int)(Math.random() * longueur + 1);
             if(position >= 0 && position < longueur && env[position].equals("_")){
+                positionsCombats.put(position, c);
                 env[position] = "[!]";
             }
             logger.info("Groupe d'ennemis placé sur la carte à la position " + position + ".");
