@@ -7,5 +7,8 @@ public class Main {
         init();
         Jeu jeu = new Jeu();
         jeu.demarrageJeu();
+        while (true){
+            jeu.jouerTour();
+        }
     }
 }

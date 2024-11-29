@@ -24,7 +24,7 @@ public class Jeu {
             case 4 -> CapaciteSpeciale.ASSASSIN;
             default -> CapaciteSpeciale.BARBARE;
         };
-        hero = new Heros(heroName, 150, (int)(Math.random() * 5), capacite);
+        hero = new Heros(heroName, 150, 1, capacite);
         logger.info("Hero ajouté (" + hero.getName() + ") = PV / Puissance / Capacité : " + hero.getPv() + " / " + hero.getForceAttaque() + " / " + hero.getCapaciteSpeciale());
 
         System.out.println("Choississez un niveau de difficulté : ");
@@ -58,5 +58,51 @@ public class Jeu {
         for(int i = 0; i < nbCombat; i++){
             this.combats.add(new Combat(hero));
         }
+    }
+
+    public void jouerTour(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Que voulez-vous faire ?");
+        System.out.println("1. Avancer\n2. Quitter");
+        int choix = scanner.nextInt();
+        switch (choix){
+            case 1 -> {
+                if(carte.getCase(hero.getPosition() + 1).equals("[!]")){
+                    System.out.println("Vous avez rencontré un groupe d'ennemis !");
+                    System.out.println("Voulez-vous combattre ou abandonner ?");
+                    System.out.println("1. Combattre\n2. Abandonner");
+                    int choixCombat = scanner.nextInt();
+                    if(choixCombat == 1){
+                        return;
+                    }else {
+                        hero.setPv(0);
+                        finJeu();
+                    }
+                }else{
+                    hero.avance(carte);
+                }
+            }
+            case 2 -> {
+                hero.setPv(0);
+                finJeu();
+            }
+            default -> System.out.println("Action invalide.");
+        }
+        carte.afficherCarte();
+        if(hero.getPosition() == carte.getPositionArrivee() - 1){
+            finJeu();
+        }
+    }
+
+    public void finJeu(){
+        if(hero.estMort()){
+            System.out.println("Défaite. Le héro est mort !");
+            logger.info("Héro mort. Défaite.");
+        }else{
+            System.out.println("Victoire. Les ennemis ont été vaincus !");
+            logger.info("Ennemis vaincus. Victoire.");
+        }
+        System.out.println("Merci d'avoir joué !");
+        System.exit(0);
     }
 }

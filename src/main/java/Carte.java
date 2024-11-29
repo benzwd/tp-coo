@@ -6,7 +6,6 @@ public class Carte {
     private final int longueur;
     private final int positionDepart;
     private final int positionArrivee;
-    private final int positionHero = 1;
     private final String[] env;
 
     public Carte(String nom, int longueur) {
@@ -52,6 +51,7 @@ public class Carte {
     }
 
     public void placerHero(Heros h){
+        int positionHero = h.getPosition();
         if(positionHero < longueur){
             env[positionHero] = "[" + h.getName() + "]";
         }
@@ -66,5 +66,21 @@ public class Carte {
             }
             logger.info("Groupe d'ennemis placé sur la carte à la position " + position + ".");
         }
+    }
+
+    public void updatePosition(int oldPos, int newPos, String name){
+        if(oldPos >= 0 && oldPos < longueur){
+            env[oldPos] = "_";
+        }
+        if(newPos >= 0 && newPos < longueur){
+            env[newPos] = "[" + name + "]";
+        }
+    }
+
+    public String getCase(int position){
+        if(position >= 0 && position < longueur){
+            return env[position];
+        }
+        return "_";
     }
 }

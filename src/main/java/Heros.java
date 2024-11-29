@@ -8,8 +8,7 @@ public class Heros extends Personnage {
     private static int increment = 0;
     private CapaciteSpeciale capaciteSpeciale;
     private boolean aUtiliseSaCapaciteSpeciale = false;
-
-
+    private int position = 1;
 
     public Heros(String name, int pv, int forceAttaque, CapaciteSpeciale capaciteSpeciale) {
         super(name, pv, forceAttaque, 5);
@@ -74,5 +73,19 @@ public class Heros extends Personnage {
         }else{
             super.attaque(ennemis.get(0));
         }
+    }
+
+    public void avance(Carte carte){
+        if(position < carte.getLongueur() - 1){
+            carte.updatePosition(position, position + 1, getName());
+            position++;
+            logger.info(getName() + " avance à la position " + position + ".");
+        }else {
+            logger.warning(getName() + " est déjà à la fin de la carte !");
+        }
+    }
+
+    public int getPosition() {
+        return position;
     }
 }
