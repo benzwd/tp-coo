@@ -57,8 +57,8 @@ public class Jeu {
     }
 
     private void genererListeCombats(int longueurCarte){
-        this.combats = new ArrayList<Combat>();
-        int nbCombat = (int) (Math.random() * ((longueurCarte - 1) + 1));
+        this.combats = new ArrayList<>();
+        int nbCombat = 1 + (int)(Math.random() * ((longueurCarte - 1) + 1));
         for(int i = 0; i < nbCombat; i++){
             this.combats.add(new Combat(hero));
         }
