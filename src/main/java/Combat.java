@@ -1,23 +1,26 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;
+import net.datafaker.Faker;
 
 public class Combat {
-    private final int NOMBRE_ENNEMI_MAX = 5;
+    Faker faker = new Faker();
     private static final Logger logger = Logger.getLogger(Combat.class.getName());
-    private List<Ennemi> ennemis;
+
+    private final int NOMBRE_ENNEMI_MAX = 5;
+    private List<Ennemi> ennemis = new ArrayList<>();
     private Heros heros;
 
     public Combat(Heros heros) {
-        int nbrEnnemis = 1 + (int)(Math.random() * NOMBRE_ENNEMI_MAX + 1);
-        ennemis = new ArrayList<Ennemi>();
+        int nbrEnnemis = faker.number().numberBetween(1, NOMBRE_ENNEMI_MAX);
+        System.out.println("Nbr enn : " + nbrEnnemis);
         for(int i = 0; i < nbrEnnemis; i++){
-            ennemis.add(new Ennemi("En",(50 + (int)(Math.random() * ((100 - 50) + 1))), (int)(Math.random() * 3), Type.aleatoire()));
+            int pv = faker.number().numberBetween(50, 100);
+            int forceAtt = faker.number().numberBetween(1, 3);
+            ennemis.add(new Ennemi(faker.streetFighter().characters(), pv, forceAtt, Type.aleatoire()));
         }
         this.heros = heros;
     }
-
-    
 
     public List<Ennemi> getEnnemis() {
         return this.ennemis;

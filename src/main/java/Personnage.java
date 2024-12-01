@@ -77,7 +77,7 @@ public abstract class Personnage implements IPersonnage {
         }
     }
 
-    public String barreVie(){
-        return "[" + name + "]" + " : [" + "♥".repeat(Math.max(0, (this.pv/10))) + "]";
+    public String statsBar(){
+        return name + " (♥ " + pv + " | ⚔ " + forceAttaque + ")";
     }
 }

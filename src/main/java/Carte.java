@@ -1,8 +1,13 @@
+import java.util.Arrays;
 import java.util.logging.*;
 import java.util.HashMap;
 import java.util.List;
+import net.datafaker.Faker;
+
 public class Carte {
     private static final Logger logger = Logger.getLogger(Carte.class.getName());
+    Faker faker = new Faker();
+
     private final String nom;
     private final int longueur;
     private final int positionDepart;
@@ -12,37 +17,20 @@ public class Carte {
 
     public Carte(String nom, int longueur) {
         this.nom = nom;
-        this.longueur = longueur;
+        this.longueur = longueur + 2;
         this.positionDepart = 0;
-        this.positionArrivee = longueur - 1;
-        this.env = new String[longueur];
+        this.positionArrivee = this.longueur - 1;
+        this.env = new String[this.longueur];
         initCarte();
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public int getLongueur() {
-        return longueur;
-    }
-
-    public int getPositionDepart() {
-        return positionDepart;
-    }
-
-    public int getPositionArrivee() {
-        return positionArrivee;
-    }
-
-    public HashMap<Integer, Combat> getPositionsCombats(){
-        return positionsCombats;
-    }
+    public String getNom() { return nom;}
+    public int getLongueur() { return longueur;}
+    public int getPositionArrivee() { return positionArrivee;}
+    public HashMap<Integer, Combat> getPositionsCombats(){ return positionsCombats;}
 
     private void initCarte(){
-        for(int i=0; i<longueur; i++){
-            env[i] = "_";
-        }
+        Arrays.fill(env, "_");
         env[positionDepart] = "[DEBUT]";
         env[positionArrivee] = "[FIN]";
         logger.info("Initialisation de la carte " + nom + " de longueur" + longueur + ".");
@@ -66,7 +54,7 @@ public class Carte {
 
     public void placerCombat(List<Combat> combats){
         for(Combat c : combats){
-            int position = (int)(Math.random() * longueur + 1);
+            int position = faker.number().numberBetween(positionDepart + 2, positionArrivee - 1);
             if(position >= 0 && position < longueur && env[position].equals("_")){
                 positionsCombats.put(position, c);
                 env[position] = "[!]";

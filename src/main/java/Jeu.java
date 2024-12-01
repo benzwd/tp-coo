@@ -2,12 +2,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.List;
+import net.datafaker.Faker;
 
 public class Jeu {
     private Heros hero;
     private Carte carte;
-    private List<Combat> combats;
+    private List<Combat> combats = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(Jeu.class.getName());
+    Faker faker = new Faker();
 
     public void demarrageJeu(){
         Scanner scanner = new Scanner(System.in);
@@ -35,11 +37,12 @@ public class Jeu {
         System.out.println("1. Facile\n2. Moyen\n3. Difficile");
         int choixNiveau = scanner.nextInt();
         int longueurCarte = switch(choixNiveau){
-            case 2 -> 10 + (int)(Math.random() * ((20 - 10) + 1));
-            case 3 -> 20 + (int)(Math.random() * ((40 - 20) + 1));
-            default -> 5 + (int)(Math.random() * ((10 - 5) + 1));
+            case 2 -> faker.number().numberBetween(10, 20);
+            case 3 -> faker.number().numberBetween(20, 40);
+            default -> faker.number().numberBetween(5, 10);
         };
-        carte = new Carte("MAP", longueurCarte);
+        carte = new Carte(faker.streetFighter().stages(), longueurCarte);
+        System.err.println("Longueur carte : " + longueurCarte);
         logger.info("Carte ajouté (" + carte.getNom() + ") = Longueur : " + carte.getLongueur());
 
         this.genererListeCombats(longueurCarte);
@@ -47,20 +50,20 @@ public class Jeu {
         System.out.println("\nDébut de la partie !");
 
         carte.placerHero(hero);
-        carte.placerCombat(this.combats);
+        carte.placerCombat(combats);
         statusBar(hero);
         carte.afficherCarte();
     }
 
     private void statusBar(Heros h){
-        System.out.println(h.barreVie());
+        System.out.println(h.statsBar());
     }
 
     private void genererListeCombats(int longueurCarte){
-        this.combats = new ArrayList<>();
-        int nbCombat = 1 + (int)(Math.random() * ((longueurCarte - 1) + 1));
+        int nbCombat = faker.number().numberBetween(1, longueurCarte);
+        System.err.println("Nb combat : " + nbCombat);
         for(int i = 0; i < nbCombat; i++){
-            this.combats.add(new Combat(hero));
+            combats.add(new Combat(hero));
         }
     }
 
