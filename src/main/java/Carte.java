@@ -54,12 +54,17 @@ public class Carte {
 
     public void placerCombat(List<Combat> combats){
         for(Combat c : combats){
-            int position = faker.number().numberBetween(positionDepart + 2, positionArrivee - 1);
-            if(position >= 0 && position < longueur && env[position].equals("_")){
-                positionsCombats.put(position, c);
-                env[position] = "[!]";
+            boolean placed = false;
+            for (int tentative = 0; tentative < 10; tentative++) {
+                int position = faker.number().numberBetween(positionDepart + 2, positionArrivee - 1);
+                if (env[position].equals("_")) {
+                    positionsCombats.put(position, c);
+                    env[position] = "[!]";
+                    logger.info("Groupe d'ennemis placé sur la carte à la position " + position + ".");
+                    placed = true;
+                    break;
+                }
             }
-            logger.info("Groupe d'ennemis placé sur la carte à la position " + position + ".");
         }
     }
 

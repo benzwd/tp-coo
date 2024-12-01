@@ -49,14 +49,23 @@ public class Combat {
     private boolean herosAttaqueEnPremier(Ennemi e){
         return e.getType() != Type.GANGSTER;
     }
+
+    private String statsBar(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(heros.statsBar()).append("\n");
+        sb.append("Ennemi(s) :\n");
+        for(Ennemi e : ennemis){
+            sb.append("• ").append(e.statsBar()).append("\n");
+        }
+        return sb.toString();
+    }
     
     public void derouleCombat(){
         Ennemi e;
         while (!this.estTerminer()) {
             e = ennemis.get(0);
             while(!(heros.estMort() || e.estMort())){
-                heros.afficherPvRestant();
-                e.afficherPvRestant();
+                System.out.println(statsBar());
                 if(herosAttaqueEnPremier(e)){
                     heros.attaque(ennemis);
                     Jeu.attendre(500);
@@ -74,9 +83,9 @@ public class Combat {
                 }
             }
             if(heros.estMort()){
-                heros.afficherPvRestant();
+                System.out.println(statsBar());
             }else{
-                e.afficherPvRestant();
+                System.out.println(statsBar());
                 ennemis.remove(e);
             }
         }if(!heros.estMort()){

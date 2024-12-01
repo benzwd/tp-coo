@@ -1,19 +1,24 @@
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
+import net.datafaker.Faker;
 
 public class Heros extends Personnage {
     private static final Logger logger = Logger.getLogger(Heros.class.getName());
+    private static final Faker faker = new Faker();
+
     private final int ID;
     private static int increment = 0;
     private CapaciteSpeciale capaciteSpeciale;
     private boolean aUtiliseSaCapaciteSpeciale = false;
     private int position = 1;
 
+
     public Heros(String name, int pv, int forceAttaque, CapaciteSpeciale capaciteSpeciale) {
-        super(name, pv, forceAttaque, 5);
+        super(name, pv, forceAttaque, faker.number().numberBetween(1, 5));
         this.ID = increment ++;
         this.capaciteSpeciale = capaciteSpeciale;
+        logger.info("Hero ajouté (" + getName() + ") = PV / Puissance / Nombre d'attaque / Capacité  : " + getPv() + " / " + getForceAttaque() + " / " + getNombreAttaque() + " / " + getCapaciteSpeciale());
     }
 
 
@@ -74,5 +79,9 @@ public class Heros extends Personnage {
 
     public int getPosition() {
         return position;
+    }
+
+    public String statsBar(){
+        return getName() + " (♥ " + getPv() + " | ⚔ " + getForceAttaque() + " | CS " + (getAUtiliseSaCapaciteSpeciale() ? "indisponible" : "disponible") + ")";
     }
 }

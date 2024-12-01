@@ -64,11 +64,7 @@ public abstract class Personnage implements IPersonnage {
     }
 
     public void afficherPvRestant(){
-        if(this.estMort()){
-            System.out.println(this.name + " a perdu tous ses pv, il est donc mort...");
-        }else{
-            System.out.println(this.name + " a " + this.pv + " pv restant");
-        }
+        System.out.println(statsBar());
     }
 
     public void attaque(Personnage e) {
