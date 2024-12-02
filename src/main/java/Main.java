@@ -1,18 +1,42 @@
+/**
+ * Classe main de l'application "Beat them all".
+ * Cette classe contient le point d'entrée du programme et gère l'initialisation 
+ * ainsi que le déroulement principal du jeu.
+ */
 public class Main {
-    private static void init(){
+
+    /**
+     * Méthode d'initialisation qui affiche les messages d'accueil.
+     * Elle introduit le jeu et affiche les noms des développeurs.
+     * Cette méthode est appelée au début de l'exécution du programme.
+     */
+    private static void init() {
         System.out.println("Bienvenue sur Beat them all !");
-        Jeu.attendre(500);
+        Jeu.attendre(500); // Pause pour améliorer l'expérience utilisateur
         System.out.println("Développé par Matys LEPRETRE et Benjamin ZAWODA.");
     }
 
+    /**
+     * Point d'entrée principal du programme.
+     * Cette méthode exécute les étapes suivantes :
+     * <ul>
+     * <li>Appelle la méthode {@link #init()} pour l'initialisation.</li>
+     * <li>Crée une instance de la classe {@code Jeu} pour démarrer le jeu.</li>
+     * <li>Démarre la boucle principale du jeu où chaque tour est joué successivement.</li>
+     * </ul>
+     *
+     * @param args Arguments de la ligne de commande (non utilisés dans ce programme).
+     */
     public static void main(String[] args) {
-        init();
-        Jeu.attendre(500);
-        Jeu jeu = new Jeu();
-        jeu.demarrageJeu();
-        while (true){
-            Jeu.attendre(1000);
-            jeu.jouerTour();
+        init(); // Affiche les messages d'accueil
+        Jeu.attendre(500); // Pause pour transition
+        Jeu jeu = new Jeu(); // Initialisation du jeu
+        jeu.demarrageJeu(); // Démarrage du jeu
+
+        // Boucle principale du jeu
+        while (true) {
+            Jeu.attendre(1000); // Pause entre les tours
+            jeu.jouerTour(); // Joue un tour de jeu
         }
     }
 }
