@@ -5,7 +5,7 @@ import java.util.Random;
  * Chaque type possède un nom associé. Cette enum fournit également des méthodes
  * pour afficher les types disponibles et en sélectionner un aléatoirement.
  */
-public enum Type {
+public enum TypeEnnemi {
     /**
      * Type représentant un brigand.
      */
@@ -31,7 +31,7 @@ public enum Type {
      * 
      * @param name Nom du type d'ennemi.
      */
-    private Type(String name) {
+    private TypeEnnemi(String name) {
         this.name = name;
     }
 
@@ -50,8 +50,8 @@ public enum Type {
      * chaque type avec un numéro incrémental pour faciliter la sélection.
      */
     public static void afficherPossibilite() {
-        for (int i = 0; i < Type.values().length; i++) {
-            System.out.println((i + 1) + " : " + Type.values()[i]);
+        for (int i = 0; i < TypeEnnemi.values().length; i++) {
+            System.out.println((i + 1) + " : " + TypeEnnemi.values()[i]);
         }
     }
 
@@ -60,7 +60,7 @@ public enum Type {
      * 
      * @return Un type aléatoire de l'énumération `Type`.
      */
-    public static Type aleatoire() {
+    public static TypeEnnemi aleatoire() {
         Random random = new Random();
         int index = random.nextInt(values().length);
         return values()[index];

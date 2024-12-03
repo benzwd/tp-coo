@@ -5,26 +5,26 @@ import java.util.List;
  * Chaque capacité spéciale possède un nom et une description, et peut être utilisée par un héros
  * pour affecter les ennemis ou modifier ses propres statistiques.
  */
-public enum CapaciteSpeciale {
+public enum TypeHeros {
     /**
      * Capacité "Barbare" : Multiplie la force d'attaque par 3.
      */
-    BARBARE("Barbare", "Multiplication de sa force d'attaque x3"),
+    BARBARE("Barbare", "Multiplication de sa force d'attaque x3", 100, 5),
 
     /**
      * Capacité "Mage" : Soigne les PV à 25% de leur valeur de base et multiplie la force d'attaque par 2 pendant un tour.
      */
-    MAGE("Mage", "Soigner ses PV à 25% de sa barre multiplier sa force d'attaque x2"),
+    MAGE("Mage", "Soigner ses PV à 25% de sa barre multiplier sa force d'attaque x2", 250, 2),
 
     /**
      * Capacité "Soigneur" : Soigne les PV à 50% de leur valeur actuelle.
      */
-    SOIGNEUR("Soigneur", "Soigner ses PV à 50%"),
+    SOIGNEUR("Soigneur", "Soigner ses PV à 50%", 500, 1),
 
     /**
      * Capacité "Assassin" : Élimine tous les ennemis en un coup.
      */
-    ASSASSIN("Assassin", "One shot tous ses ennemis");
+    ASSASSIN("Assassin", "One shot tous ses ennemis", 150, 2);
 
     /**
      * Nom de la capacité spéciale.
@@ -37,15 +37,48 @@ public enum CapaciteSpeciale {
     private final String description;
 
     /**
+     * Nombre de PV 
+     */
+    private final int pv;
+
+    /**
+     * Force d'attaque
+     */
+    private final int forceAttaque;
+
+    /**
      * Constructeur privé pour initialiser une capacité spéciale avec un nom et une description.
      * 
      * @param name        Nom de la capacité spéciale.
      * @param description Description de la capacité spéciale.
+     * @param pv          Nombre de PV
+     * @param forceAttaque Force d'attaque
      */
-    private CapaciteSpeciale(String name, String description) {
+    private TypeHeros(String name, String description, int pv, int forceAttaque) {
         this.name = name;
         this.description = description;
+        this.pv = pv;
+        this.forceAttaque = forceAttaque;
     }
+
+    /**
+     * Récupère les points de vie associés à ce type de héros.
+     *
+     * @return Le nombre de points de vie (PV) du type de héros.
+     */
+    public int getPv() {
+        return pv;
+    }
+
+    /**
+     * Récupère la force d'attaque associée à ce type de héros.
+     *
+     * @return La force d'attaque du type de héros.
+     */
+    public int getForceAttaque() {
+        return forceAttaque;
+    }
+
 
     /**
      * Affiche toutes les capacités spéciales sous forme de cartes.
@@ -53,7 +86,7 @@ public enum CapaciteSpeciale {
      */
     public static void afficherPossibilites() {
         int i = 1;
-        for (CapaciteSpeciale capacite : CapaciteSpeciale.values()) {
+        for (TypeHeros capacite : TypeHeros.values()) {
             System.out.println((i++) + ".");
             capacite.afficherCarte();
         }
@@ -111,12 +144,12 @@ public enum CapaciteSpeciale {
      * @param ennemis Liste des ennemis affectés par la capacité.
      */
     public static void utilisationCapaciteSpeciale(Heros heros, List<Ennemi> ennemis) {
-        if (heros.getCapaciteSpeciale() == BARBARE) {
+        if (heros.getTypeHeros() == BARBARE) {
             ennemis.get(0).setPv(ennemis.get(0).getPv() - (3 * heros.getForceAttaque()));
-        } else if (heros.getCapaciteSpeciale() == MAGE) {
+        } else if (heros.getTypeHeros() == MAGE) {
             heros.setPv((int) (heros.getPv() * 1.25));
             ennemis.get(0).setPv(ennemis.get(0).getPv() - (2 * heros.getForceAttaque()));
-        } else if (heros.getCapaciteSpeciale() == SOIGNEUR) {
+        } else if (heros.getTypeHeros() == SOIGNEUR) {
             ennemis.get(0).setPv((int) (ennemis.get(0).getPv() * 1.5)); // Semble incohérent (erreur possible).
         } else { // Assassin
             while (!ennemis.isEmpty()) {

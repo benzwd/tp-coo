@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
-import java.util.List;
+
 import net.datafaker.Faker;
 
 /**
@@ -29,21 +30,21 @@ public class Jeu {
         Jeu.attendre(500);
         System.out.println("Cartes des différents héros : ");
         Jeu.attendre(500);
-        CapaciteSpeciale.afficherPossibilites();
+        TypeHeros.afficherPossibilites();
         Jeu.attendre(500);
         System.out.println("Fais ton choix : (1,2,...)");
-        int choixCapacite = scanner.nextInt();
+        int choixType = scanner.nextInt();
         Jeu.attendre(500);
 
-        CapaciteSpeciale capacite = switch (choixCapacite) {
-            case 2 -> CapaciteSpeciale.MAGE;
-            case 3 -> CapaciteSpeciale.SOIGNEUR;
-            case 4 -> CapaciteSpeciale.ASSASSIN;
-            default -> CapaciteSpeciale.BARBARE;
+        TypeHeros type = switch (choixType) {
+            case 2 -> TypeHeros.MAGE;
+            case 3 -> TypeHeros.SOIGNEUR;
+            case 4 -> TypeHeros.ASSASSIN;
+            default -> TypeHeros.BARBARE;
         };
 
-        hero = new Heros(heroName, 150, 1, capacite);
-        logger.info("Hero ajouté (" + hero.getName() + ") = PV / Puissance / Capacité : " + hero.getPv() + " / " + hero.getForceAttaque() + " / " + hero.getCapaciteSpeciale());
+        hero = new Heros(heroName, type);
+        logger.info("Hero ajouté (" + hero.getName() + ") = PV / Puissance / Capacité : " + hero.getPv() + " / " + hero.getForceAttaque() + " / " + hero.getTypeHeros());
 
         System.out.println("Choississez un niveau de difficulté : ");
         System.out.println("1. Facile\n2. Moyen\n3. Difficile");
@@ -97,23 +98,49 @@ public class Jeu {
      */
     public void jouerTour() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Que voulez-vous faire ?");
-        System.out.println("1. Avancer\n2. Quitter");
-        int choix = scanner.nextInt();
-
+        int choix = -1;
+    
+        // Boucle pour obtenir un choix valide
+        do {
+            try {
+                System.out.println("Que voulez-vous faire ?");
+                System.out.println("1. Avancer\n2. Quitter");
+                choix = scanner.nextInt();
+    
+                if (choix < 1 || choix > 2) {
+                    System.out.println("Choix invalide. Veuillez saisir 1 ou 2.");
+                }
+            } catch (Exception e) {
+                System.out.println("Entrée invalide. Veuillez saisir un nombre.");
+                scanner.nextLine(); // Vide le buffer du scanner pour éviter une boucle infinie
+            }
+        } while (choix < 1 || choix > 2);
+    
         switch (choix) {
             case 1 -> {
                 if (carte.getCase(hero.getPosition() + 1).equals("[!]")) {
                     System.out.println("Vous avez rencontré un groupe d'ennemis !");
                     Jeu.attendre(250);
-                    System.out.println("Voulez-vous combattre ou abandonner ?");
-                    Jeu.attendre(250);
-                    System.out.println("1. Combattre\n2. Abandonner");
-                    int choixCombat = scanner.nextInt();
-                    Jeu.attendre(250);
+    
+                    int choixCombat = -1;
+                    do {
+                        try {
+                            System.out.println("Voulez-vous combattre ou abandonner ?");
+                            System.out.println("1. Combattre\n2. Abandonner");
+                            choixCombat = scanner.nextInt();
+    
+                            if (choixCombat < 1 || choixCombat > 2) {
+                                System.out.println("Choix invalide. Veuillez saisir 1 ou 2.");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Entrée invalide. Veuillez saisir un nombre.");
+                            scanner.nextLine(); // Vide le buffer
+                        }
+                    } while (choixCombat < 1 || choixCombat > 2);
+    
                     if (choixCombat == 1) {
                         carte.getPositionsCombats().get(hero.getPosition() + 1).derouleCombat();
-                        if(hero.estMort()) finJeu();
+                        if (hero.estMort()) finJeu();
                     } else {
                         hero.setPv(0);
                         finJeu();
@@ -126,15 +153,15 @@ public class Jeu {
                 hero.setPv(0);
                 finJeu();
             }
-            default -> System.out.println("Action invalide.");
         }
-
+    
         carte.afficherCarte();
-
+    
         if (hero.getPosition() == carte.getPositionArrivee() - 1) {
             finJeu();
         }
     }
+    
 
     /**
      * Gère la fin de la partie.

@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
+
 import net.datafaker.Faker;
 
 /**
@@ -25,7 +26,7 @@ public class Heros extends Personnage {
     /**
      * Capacité spéciale du héros.
      */
-    private CapaciteSpeciale capaciteSpeciale;
+    private TypeHeros typeHeros;
 
     /**
      * Indique si le héros a déjà utilisé sa capacité spéciale.
@@ -45,12 +46,13 @@ public class Heros extends Personnage {
      * @param forceAttaque      Force d'attaque du héros.
      * @param capaciteSpeciale  Capacité spéciale du héros.
      */
-    public Heros(String name, int pv, int forceAttaque, CapaciteSpeciale capaciteSpeciale) {
-        super(name, pv, forceAttaque, faker.number().numberBetween(1, 5));
+    public Heros(String name, TypeHeros typeHeros) {
+        super(name, typeHeros.getPv(), typeHeros.getForceAttaque(), faker.number().numberBetween(1, 5));
         this.ID = increment++;
-        this.capaciteSpeciale = capaciteSpeciale;
+        this.typeHeros = typeHeros;
+        
         logger.info("Héros ajouté (" + getName() + ") = PV / Puissance / Nombre d'attaques / Capacité : " +
-                getPv() + " / " + getForceAttaque() + " / " + getNombreAttaque() + " / " + getCapaciteSpeciale());
+                getPv() + " / " + getForceAttaque() + " / " + getNombreAttaque() + " / " + getTypeHeros());
     }
 
     /**
@@ -67,17 +69,17 @@ public class Heros extends Personnage {
      * 
      * @return La capacité spéciale du héros.
      */
-    public CapaciteSpeciale getCapaciteSpeciale() {
-        return this.capaciteSpeciale;
+    public TypeHeros getTypeHeros() {
+        return this.typeHeros;
     }
 
     /**
-     * Définit une nouvelle capacité spéciale pour le héros.
+     * Définit un nouveau type pour le héros.
      * 
      * @param capaciteSpeciale Nouvelle capacité spéciale.
      */
-    public void setCapaciteSpeciale(CapaciteSpeciale capaciteSpeciale) {
-        this.capaciteSpeciale = capaciteSpeciale;
+    public void setTypeHeros(TypeHeros typeHeros) {
+        this.typeHeros = typeHeros;
     }
 
     /**
@@ -130,7 +132,7 @@ public class Heros extends Personnage {
     public void attaque(List<Ennemi> ennemis) {
         if (!this.aUtiliseSaCapaciteSpeciale && choixJoueur(new Scanner(System.in))) {
             this.aUtiliseSaCapaciteSpeciale = true;
-            CapaciteSpeciale.utilisationCapaciteSpeciale(this, ennemis);
+            TypeHeros.utilisationCapaciteSpeciale(this, ennemis);
         } else {
             super.attaque(ennemis.get(0));
         }

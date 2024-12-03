@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.*;
+import java.util.logging.Logger;
+
 import net.datafaker.Faker;
 
 /**
@@ -47,7 +48,7 @@ public class Combat {
         for (int i = 0; i < nbrEnnemis; i++) {
             int pv = faker.number().numberBetween(50, 100);
             int forceAtt = faker.number().numberBetween(1, 3);
-            ennemis.add(new Ennemi(faker.streetFighter().characters(), pv, forceAtt, Type.aleatoire()));
+            ennemis.add(new Ennemi(faker.streetFighter().characters(), pv, forceAtt, TypeEnnemi.aleatoire()));
         }
         this.heros = heros;
     }
@@ -106,7 +107,7 @@ public class Combat {
      * @return `true` si le héros attaque en premier, sinon `false`.
      */
     private boolean herosAttaqueEnPremier(Ennemi e) {
-        return e.getType() != Type.GANGSTER;
+        return e.getType() != TypeEnnemi.GANGSTER;
     }
 
     /**
