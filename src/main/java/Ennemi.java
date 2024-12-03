@@ -64,4 +64,9 @@ public class Ennemi extends Personnage {
             this.setPorterAttaque(true);
         }
     }
+
+    public String statsBar() {
+        return super.statsBar().substring(0, super.statsBar().length() - 1) + " | Type : " + this.getTYPE() + ")";
+
+    }
 }

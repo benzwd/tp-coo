@@ -83,7 +83,7 @@ public class Jeu {
      * @param longueurCarte Longueur de la carte utilisée pour déterminer le nombre de combats.
      */
     private void genererListeCombats(int longueurCarte) {
-        int nbCombat = faker.number().numberBetween(1, longueurCarte);
+        int nbCombat = (int) faker.number().numberBetween(1, (longueurCarte / 1.5));
         System.err.println("Nb combat : " + nbCombat);
         for (int i = 0; i < nbCombat; i++) {
             combats.add(new Combat(hero));
@@ -113,6 +113,7 @@ public class Jeu {
                     Jeu.attendre(250);
                     if (choixCombat == 1) {
                         carte.getPositionsCombats().get(hero.getPosition() + 1).derouleCombat();
+                        if(hero.estMort()) finJeu();
                     } else {
                         hero.setPv(0);
                         finJeu();

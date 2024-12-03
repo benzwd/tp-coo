@@ -1,14 +1,11 @@
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.beans.Transient;
-import java.util.ArrayList;
-
-import net.datafaker.providers.videogame.HeroesOfTheStorm;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestJeu {
 
-    @Test 
+    @Test
     void testHerosMort(){
         Heros h = new Heros("Walid", 5, 10, CapaciteSpeciale.BARBARE);
         Ennemi e = new Ennemi("Mechant", 10, 1, Type.BRIGAND);
@@ -19,8 +16,8 @@ public class TestJeu {
         }
         assertTrue(h.estMort());
     }
-    
-    @Test 
+
+    @Test
     void testHerosSoigneurUtiliseCapaciteSpeciale(){
         Heros h = new Heros("Benjamin", 5, 10, CapaciteSpeciale.SOIGNEUR);
         CapaciteSpeciale.utilisationCapaciteSpeciale(h,null);

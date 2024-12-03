@@ -167,8 +167,9 @@ public class Heros extends Personnage {
      * 
      * @return Barre de statistiques sous forme de chaîne de caractères.
      */
+
     public String statsBar() {
-        return getName() + " (♥ " + getPv() + " | ⚔ " + getForceAttaque() + " | CS " +
+        return getName() + " (♥ " + getPv() + " | ⚔ " + (getForceAttaque() * getNombreAttaque()) + " | CS " +
                 (getAUtiliseSaCapaciteSpeciale() ? "indisponible" : "disponible") + ")";
     }
 }
