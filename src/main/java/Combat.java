@@ -136,14 +136,14 @@ public class Combat {
      * <li>La gestion de la mort des participants.</li>
      * </ul>
      */
-    public void derouleCombat() {
+    public void derouleCombat(ListeQuestions listeQuestions) {
         Ennemi e;
         while (!this.estTerminer()) {
             e = ennemis.get(0);
             while (!(heros.estMort() || e.estMort())) {
                 System.out.println(statsBar());
                 if (herosAttaqueEnPremier(e)) {
-                    heros.attaque(ennemis);
+                    heros.attaque(ennemis, listeQuestions);
                     Jeu.attendre(500);
                     if (!e.estMort()) {
                         e.attaque(heros);
@@ -153,7 +153,7 @@ public class Combat {
                     e.attaque(heros);
                     Jeu.attendre(500);
                     if (!heros.estMort()) {
-                        heros.attaque(ennemis);
+                        heros.attaque(ennemis,listeQuestions);
                         Jeu.attendre(500);
                     }
                 }

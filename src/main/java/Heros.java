@@ -12,6 +12,7 @@ import net.datafaker.Faker;
 public class Heros extends Personnage {
     private static final Logger logger = Logger.getLogger(Heros.class.getName());
     private static final Faker faker = new Faker();
+    private static final int MULTIPLICATION_ATTAQUE = 5;
 
     /**
      * Identifiant unique du héros.
@@ -129,12 +130,18 @@ public class Heros extends Personnage {
      * 
      * @param ennemis Liste des ennemis présents.
      */
-    public void attaque(List<Ennemi> ennemis) {
+    public void attaque(List<Ennemi> ennemis, ListeQuestions listeQuestions) {
         if (!this.aUtiliseSaCapaciteSpeciale && choixJoueur(new Scanner(System.in))) {
             this.aUtiliseSaCapaciteSpeciale = true;
             TypeHeros.utilisationCapaciteSpeciale(this, ennemis);
         } else {
-            super.attaque(ennemis.get(0));
+            if(!listeQuestions.estVide()){
+                if(listeQuestions.getQuestionAleatoire().poserQuestion()){
+                    for(int i = 0; i < MULTIPLICATION_ATTAQUE; i++) super.attaque(ennemis.get(0));
+                }
+            }else{
+                super.attaque(ennemis.get(0));
+            }           
         }
     }
 

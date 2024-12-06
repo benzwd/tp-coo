@@ -16,6 +16,7 @@ public class Jeu {
     private List<Combat> combats = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(Jeu.class.getName());
     Faker faker = new Faker();
+    ListeQuestions listeQuestions = new ListeQuestions("src\\main\\resources\\questions_culture_generale.csv"); 
 
     /**
      * Démarre le jeu en initialisant le héros, la carte, et les combats.
@@ -139,7 +140,7 @@ public class Jeu {
                     } while (choixCombat < 1 || choixCombat > 2);
     
                     if (choixCombat == 1) {
-                        carte.getPositionsCombats().get(hero.getPosition() + 1).derouleCombat();
+                        carte.getPositionsCombats().get(hero.getPosition() + 1).derouleCombat(listeQuestions);
                         if (hero.estMort()) finJeu();
                     } else {
                         hero.setPv(0);
