@@ -9,7 +9,7 @@ public class Ennemi extends Personnage {
     /**
      * Type de l'ennemi (Brigand, Catcheur, Gangster).
      */
-    private final Type TYPE;
+    private final TypeEnnemi TYPE;
 
     /**
      * Logger pour suivre les actions et événements liés aux ennemis.
@@ -25,7 +25,7 @@ public class Ennemi extends Personnage {
      * @param forceAttaque  Force d'attaque de l'ennemi.
      * @param type          Type de l'ennemi (détermine ses caractéristiques spécifiques).
      */
-    public Ennemi(String name, int pv, int forceAttaque, Type type) {
+    public Ennemi(String name, int pv, int forceAttaque, TypeEnnemi type) {
         super(name, pv, forceAttaque, 1);
         this.TYPE = type;
         ajoutAttributType();
@@ -36,7 +36,7 @@ public class Ennemi extends Personnage {
      * 
      * @return Le type de l'ennemi (Brigand, Catcheur, Gangster).
      */
-    public Type getType() {
+    public TypeEnnemi getType() {
         return this.TYPE;
     }
 
@@ -46,7 +46,7 @@ public class Ennemi extends Personnage {
      * @return Le type de l'ennemi (Brigand, Catcheur, Gangster).
      * @see #getType()
      */
-    public Type getTYPE() {
+    public TypeEnnemi getTYPE() {
         return this.TYPE;
     }
 
@@ -58,9 +58,9 @@ public class Ennemi extends Personnage {
      * </ul>
      */
     private void ajoutAttributType() {
-        if (this.TYPE == Type.CATCHEUR) {
+        if (this.TYPE == TypeEnnemi.CATCHEUR) {
             this.setPv((int) (this.getPv() * 1.5));
-        } else if (this.TYPE == Type.GANGSTER) {
+        } else if (this.TYPE == TypeEnnemi.GANGSTER) {
             this.setPorterAttaque(true);
         }
     }

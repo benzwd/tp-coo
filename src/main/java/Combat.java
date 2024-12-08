@@ -35,16 +35,18 @@ public class Combat {
      */
     private Heros heros;
 
+    private int nbT = 0;
+
     /**
      * Constructeur qui initialise un combat avec un héros donné.
      * Le nombre d'ennemis est généré aléatoirement, et chaque ennemi est
      * initialisé avec des points de vie, une force d'attaque, et un type.
-     * 
+     *
      * @param heros Héros participant au combat.
      */
     public Combat(Heros heros) {
         int nbrEnnemis = faker.number().numberBetween(1, NOMBRE_ENNEMI_MAX);
-        System.out.println("Nbr enn : " + nbrEnnemis);
+        logger.info("Nombre d'ennemis ajoutés : " + nbrEnnemis);
         for (int i = 0; i < nbrEnnemis; i++) {
             int pv = faker.number().numberBetween(50, 100);
             int forceAtt = faker.number().numberBetween(1, 3);
@@ -55,7 +57,7 @@ public class Combat {
 
     /**
      * Récupère la liste des ennemis participant au combat.
-     * 
+     *
      * @return Liste des ennemis.
      */
     public List<Ennemi> getEnnemis() {
@@ -64,7 +66,7 @@ public class Combat {
 
     /**
      * Définit une nouvelle liste d'ennemis pour le combat.
-     * 
+     *
      * @param ennemis Nouvelle liste d'ennemis.
      */
     public void setEnnemis(List<Ennemi> ennemis) {
@@ -73,7 +75,7 @@ public class Combat {
 
     /**
      * Récupère le héros participant au combat.
-     * 
+     *
      * @return Le héros.
      */
     public Heros getHeros() {
@@ -82,7 +84,7 @@ public class Combat {
 
     /**
      * Définit un nouveau héros pour le combat.
-     * 
+     *
      * @param heros Nouveau héros.
      */
     public void setHeros(Heros heros) {
@@ -92,7 +94,7 @@ public class Combat {
     /**
      * Vérifie si le combat est terminé.
      * Le combat se termine si la liste des ennemis est vide ou si le héros est mort.
-     * 
+     *
      * @return `true` si le combat est terminé, sinon `false`.
      */
     private boolean estTerminer() {
@@ -102,7 +104,7 @@ public class Combat {
     /**
      * Détermine si le héros attaque en premier.
      * Le héros attaque en premier sauf si l'ennemi est de type {@code GANGSTER}.
-     * 
+     *
      * @param e Ennemi à vérifier.
      * @return `true` si le héros attaque en premier, sinon `false`.
      */
@@ -113,7 +115,7 @@ public class Combat {
     /**
      * Génère une barre de statistiques pour le combat, comprenant
      * les statistiques du héros et la liste des ennemis.
-     * 
+     *
      * @return Barre de statistiques sous forme de chaîne de caractères.
      */
     private String statsBar() {
@@ -124,6 +126,10 @@ public class Combat {
             sb.append("• ").append(e.statsBar()).append("\n");
         }
         return sb.toString();
+    }
+
+    private String statsBar(Ennemi e) {
+        return "[" + nbT + "] " + heros.statsBar() + " \uD83E\uDD3C " + e.statsBar() + "\n";
     }
 
     /**
@@ -138,35 +144,41 @@ public class Combat {
      */
     public void derouleCombat(ListeQuestions listeQuestions) {
         Ennemi e;
-        while (!this.estTerminer()) {
-            e = ennemis.get(0);
+        System.out.println("=== Début des combats ===");
+        System.out.println(statsBar());
+        while (!estTerminer()) {
+            System.out.println("\n=== Début du combat ===");
+            e = ennemis.getFirst();
+            if(nbT == 0) System.out.println(statsBar(e));
             while (!(heros.estMort() || e.estMort())) {
-                System.out.println(statsBar());
+                nbT++;
                 if (herosAttaqueEnPremier(e)) {
                     heros.attaque(ennemis, listeQuestions);
+                    System.out.println(heros.getName() + " inflige " + (heros.getForceAttaque() * heros.getNombreAttaque()) + " dégâts.");
                     Jeu.attendre(500);
                     if (!e.estMort()) {
                         e.attaque(heros);
+                        System.out.println(e.getName() + " inflige " + e.getForceAttaque() + " dégâts.");
                         Jeu.attendre(500);
                     }
                 } else {
                     e.attaque(heros);
+                    System.out.println(e.getName() + " inflige " + e.getForceAttaque() + " dégâts.");
                     Jeu.attendre(500);
                     if (!heros.estMort()) {
-                        heros.attaque(ennemis,listeQuestions);
+                        heros.attaque(ennemis, listeQuestions);
+                        System.out.println(heros.getName() + " inflige " + (heros.getForceAttaque() * heros.getNombreAttaque()) + " dégâts.");
                         Jeu.attendre(500);
                     }
                 }
+                System.out.println(statsBar(e));
             }
-            if (heros.estMort()) {
-                System.out.println(statsBar());
-            } else {
-                System.out.println(statsBar());
+            if (!heros.estMort()) {
+                System.out.println("\u001B[31m" + e.getName() + " est mort en " + nbT + " rounds.\u001B[0m");
+                nbT=0;
                 ennemis.remove(e);
+                Jeu.attendre(1000);
             }
-        }
-        if (!heros.estMort()) {
-            System.out.println("Vous avez gagné le combat");
         }
     }
 }

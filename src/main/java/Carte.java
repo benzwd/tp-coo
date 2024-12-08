@@ -190,4 +190,12 @@ public class Carte {
         }
         return "_";
     }
+
+    public void supprimerCombat(int position) {
+        if (positionsCombats.containsKey(position + 1)) {
+            positionsCombats.remove(position);
+            env[position] = "_";
+            logger.info("Combat supprimé de la position " + position + " sur la carte.");
+        }
+    }
 }

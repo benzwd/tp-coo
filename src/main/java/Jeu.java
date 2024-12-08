@@ -57,7 +57,6 @@ public class Jeu {
         };
 
         carte = new Carte(faker.streetFighter().stages(), longueurCarte);
-        System.err.println("Longueur carte : " + longueurCarte);
         logger.info("Carte ajoutée (" + carte.getNom() + ") = Longueur : " + carte.getLongueur());
 
         this.genererListeCombats(longueurCarte);
@@ -66,17 +65,7 @@ public class Jeu {
 
         carte.placerHero(hero);
         carte.placerCombat(combats);
-        statusBar(hero);
         carte.afficherCarte();
-    }
-
-    /**
-     * Affiche une barre de statistiques du héros.
-     * 
-     * @param h Le héros dont les statistiques doivent être affichées.
-     */
-    private void statusBar(Heros h) {
-        System.out.println(h.statsBar());
     }
 
     /**
@@ -86,7 +75,6 @@ public class Jeu {
      */
     private void genererListeCombats(int longueurCarte) {
         int nbCombat = (int) faker.number().numberBetween(1, (longueurCarte / 1.5));
-        System.err.println("Nb combat : " + nbCombat);
         for (int i = 0; i < nbCombat; i++) {
             combats.add(new Combat(hero));
         }
@@ -113,7 +101,7 @@ public class Jeu {
                 }
             } catch (Exception e) {
                 System.out.println("Entrée invalide. Veuillez saisir un nombre.");
-                scanner.nextLine(); // Vide le buffer du scanner pour éviter une boucle infinie
+                scanner.nextLine();
             }
         } while (choix < 1 || choix > 2);
     
@@ -135,13 +123,18 @@ public class Jeu {
                             }
                         } catch (Exception e) {
                             System.out.println("Entrée invalide. Veuillez saisir un nombre.");
-                            scanner.nextLine(); // Vide le buffer
+                            scanner.nextLine();
                         }
                     } while (choixCombat < 1 || choixCombat > 2);
     
                     if (choixCombat == 1) {
                         carte.getPositionsCombats().get(hero.getPosition() + 1).derouleCombat(listeQuestions);
-                        if (hero.estMort()) finJeu();
+                        if (!hero.estMort()) {
+                            System.out.println("\n\u001B[32mVous avez gagné le combat !\u001B[0m");
+                            int positionCombat = hero.getPosition() + 1;
+                            carte.supprimerCombat(positionCombat);
+                            hero.avance(carte);
+                        }else finJeu();
                     } else {
                         hero.setPv(0);
                         finJeu();
@@ -171,10 +164,10 @@ public class Jeu {
      */
     public void finJeu() {
         if (hero.estMort()) {
-            System.out.println("Défaite. Le héros est mort !");
+            System.out.println("\u001B[31mDéfaite.\u001B[0m Le héros est mort !");
             logger.info("Héros mort. Défaite.");
         } else {
-            System.out.println("Victoire. Les ennemis ont été vaincus !");
+            System.out.println("\u001B[32mVictoire.\u001B[0m Les ennemis ont été vaincus !");
             logger.info("Ennemis vaincus. Victoire.");
         }
         System.out.println("Merci d'avoir joué !");
