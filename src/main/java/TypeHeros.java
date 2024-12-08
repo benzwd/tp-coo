@@ -54,7 +54,7 @@ public enum TypeHeros {
      * @param pv          Nombre de PV
      * @param forceAttaque Force d'attaque
      */
-    private TypeHeros(String name, String description, int pv, int forceAttaque) {
+    TypeHeros(String name, String description, int pv, int forceAttaque) {
         this.name = name;
         this.description = description;
         this.pv = pv;
@@ -97,32 +97,29 @@ public enum TypeHeros {
      * La carte inclut le nom de la capacité et une description.
      */
     public void afficherCarte() {
-        int largeurCarte = 45; // Largeur fixe de la carte
-        int largeurTexte = largeurCarte - 2; // Largeur interne (sans bordures)
+        int largeurCarte = 45;
+        int largeurTexte = largeurCarte - 2;
 
-        // Découper la description pour respecter la largeur
         StringBuilder descriptionDecoupee = new StringBuilder();
         String[] mots = description.split(" ");
         StringBuilder ligne = new StringBuilder();
 
         for (String mot : mots) {
-            if (ligne.length() + mot.length() + 1 > largeurTexte) { // +1 pour l'espace
+            if (ligne.length() + mot.length() + 1 > largeurTexte) {
                 descriptionDecoupee.append(ligne).append("\n");
                 ligne = new StringBuilder();
             }
-            if (ligne.length() > 0) {
+            if (!ligne.isEmpty()) {
                 ligne.append(" ");
             }
             ligne.append(mot);
         }
-        descriptionDecoupee.append(ligne); // Ajouter la dernière ligne
+        descriptionDecoupee.append(ligne);
 
-        // Afficher la carte
         System.out.println("┌" + "─".repeat(largeurCarte) + "┐");
         System.out.printf("│ %-43s │%n", this.name);
         System.out.println("├" + "─".repeat(largeurCarte) + "┤");
 
-        // Afficher la description formatée
         for (String ligneTexte : descriptionDecoupee.toString().split("\n")) {
             System.out.printf("│ %-43s │%n", ligneTexte);
         }
@@ -145,16 +142,16 @@ public enum TypeHeros {
      */
     public static void utilisationCapaciteSpeciale(Heros heros, List<Ennemi> ennemis) {
         if (heros.getTypeHeros() == BARBARE) {
-            ennemis.get(0).setPv(ennemis.get(0).getPv() - (3 * heros.getForceAttaque()));
+            ennemis.getFirst().setPv(ennemis.getFirst().getPv() - (3 * heros.getForceAttaque()));
         } else if (heros.getTypeHeros() == MAGE) {
             heros.setPv((int) (heros.getPv() * 1.25));
-            ennemis.get(0).setPv(ennemis.get(0).getPv() - (2 * heros.getForceAttaque()));
+            ennemis.getFirst().setPv(ennemis.getFirst().getPv() - (2 * heros.getForceAttaque()));
         } else if (heros.getTypeHeros() == SOIGNEUR) {
-            ennemis.get(0).setPv((int) (ennemis.get(0).getPv() * 1.5)); // Semble incohérent (erreur possible).
+            ennemis.getFirst().setPv((int) (ennemis.getFirst().getPv() * 1.5)); // Semble incohérent (erreur possible).
         } else { // Assassin
             while (!ennemis.isEmpty()) {
-                ennemis.get(0).setPv(0);
-                ennemis.remove(0);
+                ennemis.getFirst().setPv(0);
+                ennemis.removeFirst();
             }
         }
     }

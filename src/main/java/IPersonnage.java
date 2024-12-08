@@ -77,10 +77,9 @@ public interface IPersonnage {
     /**
      * Génère un nombre aléatoire représentant le nombre d'attaques que le
      * personnage peut porter.
-     * 
-     * @return Nombre d'attaques (entre 1 et le nombre maximum d'attaques inclus).
+     *
      */
-    int nombreAttaque();
+    void setNombreAttaque();
 
     /**
      * Affiche les points de vie restants du personnage sous forme de barre de statistiques.

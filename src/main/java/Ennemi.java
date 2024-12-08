@@ -1,5 +1,3 @@
-import java.util.logging.Logger;
-
 /**
  * Classe représentant un ennemi dans le jeu.
  * Hérite de la classe abstraite {@link Personnage} et ajoute des fonctionnalités spécifiques aux ennemis,
@@ -9,12 +7,7 @@ public class Ennemi extends Personnage {
     /**
      * Type de l'ennemi (Brigand, Catcheur, Gangster).
      */
-    private final TypeEnnemi TYPE;
-
-    /**
-     * Logger pour suivre les actions et événements liés aux ennemis.
-     */
-    private static final Logger logger = Logger.getLogger(Ennemi.class.getName());
+    private final TypeEnnemi typeEnnemi;
 
     /**
      * Constructeur pour créer un ennemi avec un nom, des points de vie, une force d'attaque, et un type.
@@ -27,7 +20,7 @@ public class Ennemi extends Personnage {
      */
     public Ennemi(String name, int pv, int forceAttaque, TypeEnnemi type) {
         super(name, pv, forceAttaque, 1);
-        this.TYPE = type;
+        this.typeEnnemi = type;
         ajoutAttributType();
     }
 
@@ -37,17 +30,7 @@ public class Ennemi extends Personnage {
      * @return Le type de l'ennemi (Brigand, Catcheur, Gangster).
      */
     public TypeEnnemi getType() {
-        return this.TYPE;
-    }
-
-    /**
-     * Alias pour récupérer le type de l'ennemi.
-     * 
-     * @return Le type de l'ennemi (Brigand, Catcheur, Gangster).
-     * @see #getType()
-     */
-    public TypeEnnemi getTYPE() {
-        return this.TYPE;
+        return this.typeEnnemi;
     }
 
     /**
@@ -58,15 +41,20 @@ public class Ennemi extends Personnage {
      * </ul>
      */
     private void ajoutAttributType() {
-        if (this.TYPE == TypeEnnemi.CATCHEUR) {
+        if (typeEnnemi == TypeEnnemi.CATCHEUR) {
             this.setPv((int) (this.getPv() * 1.5));
-        } else if (this.TYPE == TypeEnnemi.GANGSTER) {
+        } else if (typeEnnemi == TypeEnnemi.GANGSTER) {
             this.setPorterAttaque(true);
         }
     }
 
+    /**
+     * Génère une représentation textuelle des statistiques de l'ennemi.
+     * Affiche les points de vie, la force d'attaque et son type.
+     *
+     * @return Barre de statistiques sous forme de chaîne de caractères.
+     */
     public String statsBar() {
-        return super.statsBar().substring(0, super.statsBar().length() - 1) + " | Type : " + this.getTYPE() + ")";
-
+        return super.statsBar().substring(0, super.statsBar().length() - 1) + " | Type : " + this.getType() + ")";
     }
 }

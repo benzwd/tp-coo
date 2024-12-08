@@ -11,12 +11,12 @@ import net.datafaker.Faker;
  * Elle gère également la création de la carte, des combats, et les interactions du joueur.
  */
 public class Jeu {
-    private Heros hero;
+    public Heros hero;
     private Carte carte;
-    private List<Combat> combats = new ArrayList<>();
+    private final List<Combat> combats = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(Jeu.class.getName());
     Faker faker = new Faker();
-    ListeQuestions listeQuestions = new ListeQuestions("src\\main\\resources\\questions_culture_generale.csv"); 
+    ListeQuestions listeQuestions = new ListeQuestions("questions_culture_generale.csv");
 
     /**
      * Démarre le jeu en initialisant le héros, la carte, et les combats.
@@ -29,11 +29,9 @@ public class Jeu {
         System.out.println("Entrez votre nom : ");
         String heroName = scanner.nextLine();
         Jeu.attendre(500);
-        System.out.println("Cartes des différents héros : ");
+        System.out.println("Sélectionne ton héro : ");
         Jeu.attendre(500);
         TypeHeros.afficherPossibilites();
-        Jeu.attendre(500);
-        System.out.println("Fais ton choix : (1,2,...)");
         int choixType = scanner.nextInt();
         Jeu.attendre(500);
 
@@ -177,11 +175,11 @@ public class Jeu {
     /**
      * Met en pause l'exécution du jeu pour un nombre donné de millisecondes.
      * 
-     * @param millisecondes Durée de la pause en millisecondes.
+     * @param ms Durée de la pause en millisecondes.
      */
-    public static void attendre(int millisecondes) {
+    public static void attendre(int ms) {
         try {
-            Thread.sleep(millisecondes);
+            Thread.sleep(ms);
         } catch (InterruptedException e) {
             System.err.println("Le thread a été interrompu : " + e.getMessage());
         }

@@ -5,10 +5,7 @@ import java.util.List;
 import net.datafaker.Faker;
 
 /**
- * Classe représentant une carte dans le jeu.
- * La carte contient des informations sur l'environnement, les positions des combats,
- * et les positions de départ et d'arrivée. Elle gère également l'affichage et les interactions
- * avec les personnages et les combats.
+ * Carte dans le jeu.
  */
 public class Carte {
     /**
@@ -52,16 +49,16 @@ public class Carte {
     private final HashMap<Integer, Combat> positionsCombats = new HashMap<>();
 
     /**
-     * Constructeur pour initialiser une carte avec un nom et une longueur donnée.
+     * Constructeur pour initialiser une carte avec un nom et une longueur .
      * La carte est automatiquement initialisée avec des cases vides, une position de départ,
      * et une position d'arrivée.
      * 
      * @param nom      Nom de la carte.
-     * @param longueur Longueur de la carte (hors cases de départ et d'arrivée).
+     * @param longueur Taille de la carte (hors cases de départ et d'arrivée).
      */
     public Carte(String nom, int longueur) {
         this.nom = nom;
-        this.longueur = longueur + 2; // Ajout des cases de départ et d'arrivée
+        this.longueur = longueur + 2;
         this.positionDepart = 0;
         this.positionArrivee = this.longueur - 1;
         this.env = new String[this.longueur];
@@ -105,14 +102,13 @@ public class Carte {
     }
 
     /**
-     * Initialise la carte en remplissant les cases avec des valeurs par défaut,
-     * et en définissant les cases de départ et d'arrivée.
+     * Initialisation de la carte
      */
     private void initCarte() {
         Arrays.fill(env, "_");
         env[positionDepart] = "[DEBUT]";
         env[positionArrivee] = "[FIN]";
-        logger.info("Initialisation de la carte " + nom + " de longueur " + longueur + ".");
+        logger.info("Initialisation de la carte " + nom + " de taille " + longueur + ".");
     }
 
     /**
@@ -123,7 +119,7 @@ public class Carte {
             System.out.print(caseCarte);
         }
         System.out.println();
-        logger.info("Affichage de la carte " + nom + " de longueur " + longueur + ".");
+        logger.info("Affichage de la carte " + nom + " de taille " + longueur + ".");
     }
 
     /**
@@ -148,14 +144,12 @@ public class Carte {
      */
     public void placerCombat(List<Combat> combats) {
         for (Combat c : combats) {
-            boolean placed = false;
             for (int tentative = 0; tentative < 10; tentative++) {
                 int position = faker.number().numberBetween(positionDepart + 2, positionArrivee - 1);
                 if (env[position].equals("_")) {
                     positionsCombats.put(position, c);
                     env[position] = "[!]";
-                    logger.info("Groupe d'ennemis placé sur la carte à la position " + position + ".");
-                    placed = true;
+                    logger.info("Groupe d'ennemis placés sur la carte à la position " + position + ".");
                     break;
                 }
             }
@@ -191,8 +185,13 @@ public class Carte {
         return "_";
     }
 
+    /**
+     * Supprime un combat de la guerre
+     *
+     * @param position Position du combat.
+     */
     public void supprimerCombat(int position) {
-        if (positionsCombats.containsKey(position + 1)) {
+        if (positionsCombats.containsKey(position)) {
             positionsCombats.remove(position);
             env[position] = "_";
             logger.info("Combat supprimé de la position " + position + " sur la carte.");

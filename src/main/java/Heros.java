@@ -13,21 +13,12 @@ public class Heros extends Personnage {
     private static final Logger logger = Logger.getLogger(Heros.class.getName());
     private static final Faker faker = new Faker();
     private static final int MULTIPLICATION_ATTAQUE = 5;
-
-    /**
-     * Identifiant unique du héros.
-     */
-    private final int ID;
-
-    /**
-     * Compteur statique pour générer des identifiants uniques.
-     */
-    private static int increment = 0;
+    private static final boolean activateQCM = false;
 
     /**
      * Capacité spéciale du héros.
      */
-    private TypeHeros typeHeros;
+    private final TypeHeros typeHeros;
 
     /**
      * Indique si le héros a déjà utilisé sa capacité spéciale.
@@ -43,26 +34,14 @@ public class Heros extends Personnage {
      * Constructeur pour créer un héros avec un nom, des points de vie, une force d'attaque, et une capacité spéciale.
      * 
      * @param name              Nom du héros.
-     * @param pv                Points de vie initiaux du héros.
-     * @param forceAttaque      Force d'attaque du héros.
-     * @param capaciteSpeciale  Capacité spéciale du héros.
+     * @param typeHeros  Capacité spéciale du héros.
      */
     public Heros(String name, TypeHeros typeHeros) {
         super(name, typeHeros.getPv(), typeHeros.getForceAttaque(), faker.number().numberBetween(1, 5));
-        this.ID = increment++;
         this.typeHeros = typeHeros;
         
         logger.info("Héros ajouté (" + getName() + ") = PV / Puissance / Nombre d'attaques / Capacité : " +
                 getPv() + " / " + getForceAttaque() + " / " + getNombreAttaque() + " / " + getTypeHeros());
-    }
-
-    /**
-     * Récupère l'identifiant unique du héros.
-     * 
-     * @return Identifiant unique du héros.
-     */
-    public int getID() {
-        return this.ID;
     }
 
     /**
@@ -72,24 +51,6 @@ public class Heros extends Personnage {
      */
     public TypeHeros getTypeHeros() {
         return this.typeHeros;
-    }
-
-    /**
-     * Définit un nouveau type pour le héros.
-     * 
-     * @param capaciteSpeciale Nouvelle capacité spéciale.
-     */
-    public void setTypeHeros(TypeHeros typeHeros) {
-        this.typeHeros = typeHeros;
-    }
-
-    /**
-     * Vérifie si le héros a déjà utilisé sa capacité spéciale.
-     * 
-     * @return `true` si la capacité spéciale a été utilisée, sinon `false`.
-     */
-    public boolean isAUtiliseSaCapaciteSpeciale() {
-        return this.aUtiliseSaCapaciteSpeciale;
     }
 
     /**
@@ -117,7 +78,7 @@ public class Heros extends Personnage {
      * @return `true` si le joueur souhaite utiliser la capacité spéciale, sinon `false`.
      */
     private boolean choixJoueur(Scanner joueurInput) {
-        System.out.println("Souhaites-tu utiliser la capacité spéciale de ton héros ? (Oui ou Non)");
+        System.out.println("Souhaites-tu utiliser ta capacité spéciale de ton héros ?");
         String reponse = joueurInput.nextLine();
         if (reponse.isEmpty()) return false;
         return reponse.charAt(0) == 'O' || reponse.charAt(0) == 'o';
@@ -131,16 +92,16 @@ public class Heros extends Personnage {
      * @param ennemis Liste des ennemis présents.
      */
     public void attaque(List<Ennemi> ennemis, ListeQuestions listeQuestions) {
-        if (!this.aUtiliseSaCapaciteSpeciale && choixJoueur(new Scanner(System.in))) {
-            this.aUtiliseSaCapaciteSpeciale = true;
+        if (!aUtiliseSaCapaciteSpeciale && choixJoueur(new Scanner(System.in))) {
+            setAUtiliseSaCapaciteSpeciale(true);
             TypeHeros.utilisationCapaciteSpeciale(this, ennemis);
         } else {
-            if(!listeQuestions.estVide()){
+            if(!listeQuestions.estVide() && activateQCM){
                 if(listeQuestions.getQuestionAleatoire().poserQuestion()){
-                    for(int i = 0; i < MULTIPLICATION_ATTAQUE; i++) super.attaque(ennemis.get(0));
+                    for(int i = 0; i < MULTIPLICATION_ATTAQUE; i++) super.attaque(ennemis.getFirst());
                 }
             }else{
-                super.attaque(ennemis.get(0));
+                super.attaque(ennemis.getFirst());
             }           
         }
     }
@@ -178,7 +139,6 @@ public class Heros extends Personnage {
      */
 
     public String statsBar() {
-        return getName() + " (♥ " + getPv() + " | ⚔ " + (getForceAttaque() * getNombreAttaque()) + " | CS " +
-                (getAUtiliseSaCapaciteSpeciale() ? "indisponible" : "disponible") + ")";
+        return super.statsBar().substring(0, super.statsBar().length() - 1) + " | CS " + (getAUtiliseSaCapaciteSpeciale() ? "indisponible" : "disponible") + ")";
     }
 }

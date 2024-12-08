@@ -11,30 +11,23 @@ import net.datafaker.Faker;
  */
 public class Combat {
     /**
-     * Instance de la bibliothèque Faker pour générer des données aléatoires.
-     */
-    private final Faker faker = new Faker();
-
-    /**
      * Logger pour suivre les événements et les actions pendant le combat.
      */
     private static final Logger logger = Logger.getLogger(Combat.class.getName());
 
     /**
-     * Nombre maximum d'ennemis dans un combat.
-     */
-    private final int NOMBRE_ENNEMI_MAX = 5;
-
-    /**
      * Liste des ennemis participant au combat.
      */
-    private List<Ennemi> ennemis = new ArrayList<>();
+    private final List<Ennemi> ennemis = new ArrayList<>();
 
     /**
      * Héros participant au combat.
      */
-    private Heros heros;
+    private final Heros heros;
 
+    /**
+     * Nombre de tours;
+     */
     private int nbT = 0;
 
     /**
@@ -45,8 +38,10 @@ public class Combat {
      * @param heros Héros participant au combat.
      */
     public Combat(Heros heros) {
-        int nbrEnnemis = faker.number().numberBetween(1, NOMBRE_ENNEMI_MAX);
+        Faker faker = new Faker();
+        int nbrEnnemis = faker.number().numberBetween(1, 5);
         logger.info("Nombre d'ennemis ajoutés : " + nbrEnnemis);
+
         for (int i = 0; i < nbrEnnemis; i++) {
             int pv = faker.number().numberBetween(50, 100);
             int forceAtt = faker.number().numberBetween(1, 3);
@@ -55,40 +50,8 @@ public class Combat {
         this.heros = heros;
     }
 
-    /**
-     * Récupère la liste des ennemis participant au combat.
-     *
-     * @return Liste des ennemis.
-     */
-    public List<Ennemi> getEnnemis() {
-        return this.ennemis;
-    }
-
-    /**
-     * Définit une nouvelle liste d'ennemis pour le combat.
-     *
-     * @param ennemis Nouvelle liste d'ennemis.
-     */
-    public void setEnnemis(List<Ennemi> ennemis) {
-        this.ennemis = ennemis;
-    }
-
-    /**
-     * Récupère le héros participant au combat.
-     *
-     * @return Le héros.
-     */
-    public Heros getHeros() {
-        return this.heros;
-    }
-
-    /**
-     * Définit un nouveau héros pour le combat.
-     *
-     * @param heros Nouveau héros.
-     */
-    public void setHeros(Heros heros) {
-        this.heros = heros;
+    public void addEnnemis(Ennemi ennemi) {
+        ennemis.add(ennemi);
     }
 
     /**
@@ -128,13 +91,18 @@ public class Combat {
         return sb.toString();
     }
 
+    /**
+     * Génère une barre de statistiques un ennemi en particulier, affichage du nombre de tour.
+     *
+     * @return Barre de statistiques sous forme de chaîne de caractères.
+     */
     private String statsBar(Ennemi e) {
-        return "[" + nbT + "] " + heros.statsBar() + " \uD83E\uDD3C " + e.statsBar() + "\n";
+        return "\n[" + nbT + "] " + heros.statsBar() + " \uD83E\uDD3C " + e.statsBar();
     }
 
     /**
      * Déroule le combat entre le héros et les ennemis.
-     * Le combat continue jusqu'à ce qu'il soit terminé (tous les ennemis sont morts ou le héros est mort).
+     * Le combat continue tant que {@link Combat#estTerminer()} retourne false.
      * Le déroulement inclut :
      * <ul>
      * <li>L'ordre des attaques (le héros ou l'ennemi attaque en premier).</li>

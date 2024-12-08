@@ -1,17 +1,13 @@
-import java.util.logging.Logger;
-
 /**
  * Classe abstraite représentant un personnage dans le jeu.
  * Cette classe contient les propriétés communes et les fonctionnalités de base
  * pour tous les personnages. Elle implémente l'interface `IPersonnage`.
  */
 public abstract class Personnage implements IPersonnage {
-    private static final Logger logger = Logger.getLogger(Personnage.class.getName());
-
     /**
      * Nombre d'attaques que le personnage peut porter.
      */
-    private final int NOMBRE_ATTAQUE;
+    private int nbrAttaque;
 
     /**
      * Nom du personnage.
@@ -29,11 +25,6 @@ public abstract class Personnage implements IPersonnage {
     private int forceAttaque;
 
     /**
-     * Points de vie actuels du personnage.
-     */
-    private int pvActuels;
-
-    /**
      * Indique si le personnage tir à distance.
      */
     private boolean porterAttaque;
@@ -47,11 +38,10 @@ public abstract class Personnage implements IPersonnage {
      * @param nombreAttaque Nombre maximum d'attaques possibles par tour.
      */
     public Personnage(String name, int pv, int forceAttaque, int nombreAttaque) {
-        this.NOMBRE_ATTAQUE = nombreAttaque;
+        this.nbrAttaque = nombreAttaque;
         this.name = name;
         this.pv = pv;
         this.forceAttaque = forceAttaque;
-        this.pvActuels = pv;
         this.porterAttaque = false;
     }
 
@@ -61,7 +51,7 @@ public abstract class Personnage implements IPersonnage {
      * @return Nombre maximum d'attaques.
      */
     public int getNombreAttaque() {
-        return this.NOMBRE_ATTAQUE;
+        return this.nbrAttaque;
     }
 
     /**
@@ -148,11 +138,10 @@ public abstract class Personnage implements IPersonnage {
     /**
      * Génère un nombre aléatoire représentant le nombre d'attaques que le
      * personnage peut porter.
-     * 
-     * @return Nombre d'attaques (entre 1 et `NOMBRE_ATTAQUE` inclus).
+     *
      */
-    public int nombreAttaque() {
-        return (int) (Math.random() * this.NOMBRE_ATTAQUE + 1);
+    public void setNombreAttaque() {
+        this.nbrAttaque = (int) (Math.random() * this.nbrAttaque + 1);
     }
 
     /**
@@ -171,7 +160,7 @@ public abstract class Personnage implements IPersonnage {
      * @param e Le personnage cible de l'attaque.
      */
     public void attaque(Personnage e) {
-        for (int i = 0; i <= nombreAttaque(); i++) {
+        for (int i = 0; i < getNombreAttaque(); i++) {
             e.setPv(e.pv - this.forceAttaque);
         }
     }

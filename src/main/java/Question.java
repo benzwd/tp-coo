@@ -74,9 +74,7 @@ public class Question {
         int choix;
         try (Scanner scanner = new Scanner(System.in)) {
             choix = -1;
-            // Affichage de la question
             afficherQuestion();
-            // Boucle pour obtenir une entrée valide
             while (choix < 1 || choix > 4) {
                 try {
                     choix = scanner.nextInt();

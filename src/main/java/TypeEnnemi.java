@@ -24,14 +24,14 @@ public enum TypeEnnemi {
     /**
      * Nom associé au type d'ennemi.
      */
-    private String name;
+    private final String name;
 
     /**
      * Constructeur privé de l'énumération `Type`.
      * 
      * @param name Nom du type d'ennemi.
      */
-    private TypeEnnemi(String name) {
+    TypeEnnemi(String name) {
         this.name = name;
     }
 
@@ -42,17 +42,6 @@ public enum TypeEnnemi {
      */
     public String getName(){
         return name;
-    }
-
-    /**
-     * Affiche les types disponibles avec leurs numéros correspondants.
-     * Cette méthode parcourt toutes les valeurs de l'énumération et affiche
-     * chaque type avec un numéro incrémental pour faciliter la sélection.
-     */
-    public static void afficherPossibilite() {
-        for (int i = 0; i < TypeEnnemi.values().length; i++) {
-            System.out.println((i + 1) + " : " + TypeEnnemi.values()[i]);
-        }
     }
 
     /**
