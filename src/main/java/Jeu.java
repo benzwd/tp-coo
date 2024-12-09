@@ -32,6 +32,7 @@ public class Jeu {
         System.out.println("Sélectionne ton héro : ");
         Jeu.attendre(500);
         TypeHeros.afficherPossibilites();
+        System.out.println("Choisissez un nombre entre 1 et 4 :");
         int choixType = scanner.nextInt();
         Jeu.attendre(500);
 
@@ -43,6 +44,7 @@ public class Jeu {
         };
 
         hero = new Heros(heroName, type);
+        System.out.println("Vous avez choisi un héro de type " + hero.getTypeHeros());
         logger.info("Hero ajouté (" + hero.getName() + ") = PV / Puissance / Capacité : " + hero.getPv() + " / " + hero.getForceAttaque() + " / " + hero.getTypeHeros());
 
         System.out.println("Choississez un niveau de difficulté : ");

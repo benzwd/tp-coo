@@ -11,7 +11,6 @@ public class Question {
     private final String choix3;
     private final String choix4;
     private final String bonneReponse;
-
     /**
      * Constructeur pour initialiser une question avec ses choix et la bonne réponse.
      *
@@ -61,6 +60,8 @@ public class Question {
             default:
                 reponseJoueur = this.choix4;
         }
+        if(reponseJoueur.equals(reponseJoueur)) System.out.println("BONNE REPONSE");
+        else System.out.println("La bonne réponse est : " + bonneReponse);
         return reponseJoueur.equals(reponseJoueur) ;
     }
 
@@ -70,9 +71,9 @@ public class Question {
      *
      * @return true si l'utilisateur a donné la bonne réponse, sinon false.
      */
-    public boolean poserQuestion() {
+    public boolean poserQuestion(Scanner scanner) {
         int choix;
-        try (Scanner scanner = new Scanner(System.in)) {
+        try {
             choix = -1;
             afficherQuestion();
             while (choix < 1 || choix > 4) {
@@ -86,6 +87,8 @@ public class Question {
                     scanner.nextLine();
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return choixJoueurEstBonneReponse(choix);
     }

@@ -13,7 +13,8 @@ public class Heros extends Personnage {
     private static final Logger logger = Logger.getLogger(Heros.class.getName());
     private static final Faker faker = new Faker();
     private static final int MULTIPLICATION_ATTAQUE = 5;
-    private static final boolean activateQCM = false;
+    private static final boolean activateQCM = true;
+    private Scanner scanner = new Scanner(System.in);
 
     /**
      * Capacité spéciale du héros.
@@ -73,13 +74,13 @@ public class Heros extends Personnage {
 
     /**
      * Demande au joueur s'il souhaite utiliser la capacité spéciale de son héros.
-     * 
-     * @param joueurInput Scanner pour lire la réponse du joueur.
+     *
      * @return `true` si le joueur souhaite utiliser la capacité spéciale, sinon `false`.
      */
-    private boolean choixJoueur(Scanner joueurInput) {
+    private boolean choixJoueur() {
+
         System.out.println("Souhaites-tu utiliser ta capacité spéciale de ton héros ?");
-        String reponse = joueurInput.nextLine();
+        String reponse = scanner.nextLine();
         if (reponse.isEmpty()) return false;
         return reponse.charAt(0) == 'O' || reponse.charAt(0) == 'o';
     }
@@ -92,12 +93,12 @@ public class Heros extends Personnage {
      * @param ennemis Liste des ennemis présents.
      */
     public void attaque(List<Ennemi> ennemis, ListeQuestions listeQuestions) {
-        if (!aUtiliseSaCapaciteSpeciale && choixJoueur(new Scanner(System.in))) {
+        if (!aUtiliseSaCapaciteSpeciale && choixJoueur()) {
             setAUtiliseSaCapaciteSpeciale(true);
             TypeHeros.utilisationCapaciteSpeciale(this, ennemis);
         } else {
             if(!listeQuestions.estVide() && activateQCM){
-                if(listeQuestions.getQuestionAleatoire().poserQuestion()){
+                if(listeQuestions.getQuestionAleatoire().poserQuestion(scanner)){
                     for(int i = 0; i < MULTIPLICATION_ATTAQUE; i++) super.attaque(ennemis.getFirst());
                 }
             }else{
