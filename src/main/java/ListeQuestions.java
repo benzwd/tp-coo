@@ -40,15 +40,15 @@ public class ListeQuestions {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
+                    List<String> listeChoix = new ArrayList<>();
                     String[] col = line.split(";");
                     String question = col[0];
-                    String option1 = col[1];
-                    String option2 = col[2];
-                    String option3 = col[3];
-                    String option4 = col[4];
+                    listeChoix.add(col[1]);
+                    listeChoix.add(col[2]);
+                    listeChoix.add(col[3]);
+                    listeChoix.add(col[4]);
                     String bonneReponse = col[5];
-                    questions.add(new Question(question, option1, option2, option3, option4, bonneReponse));
-
+                    questions.add(new Question(question, listeChoix, bonneReponse));
                 }
             }
         } catch (IOException e) {
@@ -61,7 +61,7 @@ public class ListeQuestions {
      * 
      * @return Une instance de `Question`, ou null si aucune question n'est disponible.
      */
-    public Question getQuestionAleatoire() {
+    public Question getQuestionAleatoire(){
         if (questions.isEmpty()) {
             return null;
         }

@@ -9,7 +9,7 @@ public enum TypeHeros {
     /**
      * Capacité "Barbare" : Multiplie la force d'attaque par 3.
      */
-    BARBARE("Barbare", "Multiplication de sa force d'attaque x3", 100, 5),
+    BARBARE("Barbare", "Multiplication de sa force d'attaque x20", 100, 5),
 
     /**
      * Capacité "Mage" : Soigne les PV à 25% de leur valeur de base et multiplie la force d'attaque par 2 pendant un tour.
@@ -131,7 +131,7 @@ public enum TypeHeros {
      * Utilise la capacité spéciale d'un héros sur un ou plusieurs ennemis.
      * Les effets dépendent de la capacité spéciale sélectionnée :
      * <ul>
-     * <li><b>Barbare :</b> Multiplie la force d'attaque par 3 et inflige des dégâts à un ennemi.</li>
+     * <li><b>Barbare :</b> Multiplie la force d'attaque par 20 et inflige des dégâts à un ennemi.</li>
      * <li><b>Mage :</b> Soigne les PV du héros à 25% et double sa force d'attaque.</li>
      * <li><b>Soigneur :</b> Soigne les PV de l'ennemi à 50% (erreur possible dans la logique).</li>
      * <li><b>Assassin :</b> Élimine tous les ennemis d'un seul coup.</li>
@@ -141,18 +141,23 @@ public enum TypeHeros {
      * @param ennemis Liste des ennemis affectés par la capacité.
      */
     public static void utilisationCapaciteSpeciale(Heros heros, List<Ennemi> ennemis) {
-        if (heros.getTypeHeros() == BARBARE) {
-            ennemis.getFirst().setPv(ennemis.getFirst().getPv() - (3 * heros.getForceAttaque()));
+        if (heros.getTypeHeros() == BARBARE){
+            ennemis.getFirst().setPv(ennemis.getFirst().getPv() - (20 * heros.getForceAttaque()));
+            System.out.println("\uD83D\uDD25\uD83D\uDD25 : " + heros.getName() + " est en rage et a multiplié les dégâts infligés à son ennemi par 20.");
         } else if (heros.getTypeHeros() == MAGE) {
             heros.setPv((int) (heros.getPv() * 1.25));
             ennemis.getFirst().setPv(ennemis.getFirst().getPv() - (2 * heros.getForceAttaque()));
+            System.out.println("❤ + \uD83D\uDD25 : " + heros.getName() + " c'est soigné à 25% et à doubler sa force d'attaque pour ce tour.");
         } else if (heros.getTypeHeros() == SOIGNEUR) {
             ennemis.getFirst().setPv((int) (ennemis.getFirst().getPv() * 1.5)); // Semble incohérent (erreur possible).
+            System.out.println("❤ : " + heros.getName() + " c'est soigné à 50%.");
         } else { // Assassin
             while (!ennemis.isEmpty()) {
                 ennemis.getFirst().setPv(0);
                 ennemis.removeFirst();
             }
+            System.out.print("\uD83D\uDD25\uD83D\uDD25\uD83D\uDD25 :" + heros.getName() + " a tué tous les ennemis.");
+
         }
     }
 }
