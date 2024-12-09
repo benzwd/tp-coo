@@ -38,7 +38,7 @@ public class Heros extends Personnage {
      * @param typeHeros  Capacité spéciale du héros.
      */
     public Heros(String name, TypeHeros typeHeros) {
-        super(name, typeHeros.getPv(), typeHeros.getForceAttaque(), faker.number().numberBetween(1, 5));
+        super(name, typeHeros.getPv(), typeHeros.getForceAttaque(), 1);
         this.typeHeros = typeHeros;
         
         logger.info("Héros ajouté (" + getName() + ") = PV / Puissance / Nombre d'attaques / Capacité : " +
@@ -96,13 +96,19 @@ public class Heros extends Personnage {
         if (!aUtiliseSaCapaciteSpeciale && choixJoueur()) {
             setAUtiliseSaCapaciteSpeciale(true);
             TypeHeros.utilisationCapaciteSpeciale(this, ennemis);
-        } else {
+        }else {
             if(!listeQuestions.estVide() && activateQCM){
                 if(listeQuestions.getQuestionAleatoire().poserQuestion(scanner)){
                     for(int i = 0; i < MULTIPLICATION_ATTAQUE; i++) super.attaque(ennemis.getFirst());
+                    System.out.println(this.getName() + " inflige " + (this.getForceAttaque() * this.getNombreAttaque()) * MULTIPLICATION_ATTAQUE + " dégâts.");
+                }else{
+                    super.attaque(ennemis.getFirst());
+                    System.out.println(this.getName() + " inflige " + (this.getForceAttaque() * this.getNombreAttaque()) + " dégâts.");
                 }
             }else{
                 super.attaque(ennemis.getFirst());
+                System.out.println(this.getName() + " inflige " + (this.getForceAttaque() * this.getNombreAttaque()) + " dégâts.");
+
             }           
         }
     }

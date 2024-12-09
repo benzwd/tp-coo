@@ -122,7 +122,6 @@ public class Combat {
                 nbT++;
                 if (herosAttaqueEnPremier(e)) {
                     heros.attaque(ennemis, listeQuestions);
-                    System.out.println(heros.getName() + " inflige " + (heros.getForceAttaque() * heros.getNombreAttaque()) + " dégâts.");
                     Jeu.attendre(500);
                     if (!e.estMort()) {
                         e.attaque(heros);
@@ -135,7 +134,6 @@ public class Combat {
                     Jeu.attendre(500);
                     if (!heros.estMort()) {
                         heros.attaque(ennemis, listeQuestions);
-                        System.out.println(heros.getName() + " inflige " + (heros.getForceAttaque() * heros.getNombreAttaque()) + " dégâts.");
                         Jeu.attendre(500);
                     }
                 }
