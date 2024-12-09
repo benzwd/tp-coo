@@ -1,3 +1,8 @@
+import main.Jeu;
+
+import java.io.InputStream;
+import java.util.logging.LogManager;
+
 /**
  * Classe main de l'application "Beat them all".
  * Cette classe contient le point d'entrée du programme et gère l'initialisation 
@@ -21,7 +26,7 @@ public class Main {
      * Cette méthode exécute les étapes suivantes :
      * <ul>
      * <li>Appelle la méthode {@link #init()} pour l'initialisation.</li>
-     * <li>Crée une instance de la classe {@code Jeu} pour démarrer le jeu.</li>
+     * <li>Crée une instance de la classe {@code main.Jeu} pour démarrer le jeu.</li>
      * <li>Démarre la boucle principale du jeu où chaque tour est joué successivement.</li>
      * </ul>
      *
@@ -29,6 +34,17 @@ public class Main {
      */
     public static void main(String[] args) {
         init(); // Affiche les messages d'accueil
+
+        try (InputStream input = Main.class.getClassLoader().getResourceAsStream("logging.properties")) {
+            if (input == null) {
+                System.err.println("Fichier logging.properties introuvable dans resources !");
+                return;
+            }
+            LogManager.getLogManager().readConfiguration(input);
+        } catch (Exception e) {
+            System.err.println("Erreur lors du chargement de logging.properties : " + e.getMessage());
+        }
+
         Jeu.attendre(500); // Pause pour transition
         Jeu jeu = new Jeu(); // Initialisation du jeu
         jeu.demarrageJeu(); // Démarrage du jeu

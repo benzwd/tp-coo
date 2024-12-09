@@ -1,4 +1,11 @@
+import main.Carte;
+import main.Combat;
+import main.Jeu;
 import org.junit.jupiter.api.Test;
+import personnages.Ennemi;
+import personnages.Heros;
+import utils.TypeEnnemi;
+import utils.TypeHeros;
 
 import java.util.HashMap;
 

@@ -1,7 +1,11 @@
+package personnages;
+
+import utils.IPersonnage;
+
 /**
  * Classe abstraite représentant un personnage dans le jeu.
  * Cette classe contient les propriétés communes et les fonctionnalités de base
- * pour tous les personnages. Elle implémente l'interface `IPersonnage`.
+ * pour tous les personnages. Elle implémente l'interface `utils.IPersonnage`.
  */
 public abstract class Personnage implements IPersonnage {
     /**
@@ -30,7 +34,7 @@ public abstract class Personnage implements IPersonnage {
     private boolean porterAttaque;
 
     /**
-     * Constructeur de la classe `Personnage`.
+     * Constructeur de la classe `personnages.Personnage`.
      * 
      * @param name          Nom du personnage.
      * @param pv            Points de vie initiaux du personnage.

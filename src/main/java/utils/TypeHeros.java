@@ -1,3 +1,8 @@
+package utils;
+
+import personnages.Ennemi;
+import personnages.Heros;
+
 import java.util.List;
 
 /**

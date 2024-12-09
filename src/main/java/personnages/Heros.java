@@ -1,8 +1,15 @@
+package personnages;
+
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+import main.Carte;
 import net.datafaker.Faker;
+import questions.ListeQuestions;
+import utils.TypeHeros;
+
 
 /**
  * Classe représentant un héros dans le jeu.
@@ -11,10 +18,8 @@ import net.datafaker.Faker;
  */
 public class Heros extends Personnage {
     private static final Logger logger = Logger.getLogger(Heros.class.getName());
-    private static final Faker faker = new Faker();
     private static final int MULTIPLICATION_ATTAQUE = 5;
-    private static final boolean activateQCM = true;
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Capacité spéciale du héros.
@@ -93,6 +98,8 @@ public class Heros extends Personnage {
      * @param ennemis Liste des ennemis présents.
      */
     public void attaque(List<Ennemi> ennemis, ListeQuestions listeQuestions) {
+        Random random = new Random();
+        boolean activateQCM = random.nextBoolean();
         if (!aUtiliseSaCapaciteSpeciale && choixJoueur()) {
             setAUtiliseSaCapaciteSpeciale(true);
             TypeHeros.utilisationCapaciteSpeciale(this, ennemis);
@@ -117,7 +124,7 @@ public class Heros extends Personnage {
      * Fait avancer le héros sur la carte.
      * Si le héros est déjà à la fin de la carte, un message d'avertissement est affiché.
      * 
-     * @param carte Carte sur laquelle le héros avance.
+     * @param carte main.Carte sur laquelle le héros avance.
      */
     public void avance(Carte carte) {
         if (position < carte.getLongueur() - 1) {

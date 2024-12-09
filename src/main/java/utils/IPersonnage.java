@@ -1,6 +1,10 @@
+package utils;
+
+import personnages.Personnage;
+
 /**
  * Interface représentant les fonctionnalités d'un personnage dans le jeu.
- * Cette interface définit les comportements communs à tous les personnages (Ennemi et Heros).
+ * Cette interface définit les comportements communs à tous les personnages (personnages.Ennemi et personnages.Heros).
  */
 public interface IPersonnage {
 

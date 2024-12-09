@@ -1,8 +1,14 @@
+package main;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import net.datafaker.Faker;
+import personnages.Ennemi;
+import personnages.Heros;
+import questions.ListeQuestions;
+import utils.TypeEnnemi;
 
 /**
  * Classe représentant un combat entre un héros et un groupe d'ennemis.
@@ -68,7 +74,7 @@ public class Combat {
      * Détermine si le héros attaque en premier.
      * Le héros attaque en premier sauf si l'ennemi est de type {@code GANGSTER}.
      *
-     * @param e Ennemi à vérifier.
+     * @param e personnages.Ennemi à vérifier.
      * @return `true` si le héros attaque en premier, sinon `false`.
      */
     private boolean herosAttaqueEnPremier(Ennemi e) {
@@ -84,7 +90,7 @@ public class Combat {
     private String statsBar() {
         StringBuilder sb = new StringBuilder();
         sb.append(heros.statsBar()).append("\n");
-        sb.append("Ennemi(s) :\n");
+        sb.append("personnages.Ennemi(s) :\n");
         for (Ennemi e : ennemis) {
             sb.append("• ").append(e.statsBar()).append("\n");
         }

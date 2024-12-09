@@ -1,11 +1,14 @@
+package main;
+
 import java.util.Arrays;
 import java.util.logging.*;
 import java.util.HashMap;
 import java.util.List;
 import net.datafaker.Faker;
+import personnages.Heros;
 
 /**
- * Carte dans le jeu.
+ * main.Carte dans le jeu.
  */
 public class Carte {
     /**
@@ -194,7 +197,7 @@ public class Carte {
         if (positionsCombats.containsKey(position)) {
             positionsCombats.remove(position);
             env[position] = "_";
-            logger.info("Combat supprimé de la position " + position + " sur la carte.");
+            logger.info("main.Combat supprimé de la position " + position + " sur la carte.");
         }
     }
 }

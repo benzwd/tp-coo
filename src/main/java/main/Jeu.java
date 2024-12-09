@@ -1,9 +1,14 @@
+package main;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
 import net.datafaker.Faker;
+import personnages.Heros;
+import questions.ListeQuestions;
+import utils.TypeHeros;
 
 /**
  * Classe représentant le jeu "Beat them all".
@@ -60,7 +65,7 @@ public class Jeu {
         };
 
         carte = new Carte(faker.streetFighter().stages(), longueurCarte);
-        logger.info("Carte ajoutée (" + carte.getNom() + ") = Longueur : " + carte.getLongueur());
+        logger.info("main.Carte ajoutée (" + carte.getNom() + ") = Longueur : " + carte.getLongueur());
 
         this.genererListeCombats(longueurCarte);
 

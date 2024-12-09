@@ -1,3 +1,4 @@
+package questions;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class ListeQuestions {
     /**
      * Retourne une question aléatoire depuis la liste.
      * 
-     * @return Une instance de `Question`, ou null si aucune question n'est disponible.
+     * @return Une instance de `questions.Question`, ou null si aucune question n'est disponible.
      */
     public Question getQuestionAleatoire(){
         if (questions.isEmpty()) {

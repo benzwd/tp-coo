@@ -1,3 +1,7 @@
+package personnages;
+
+import utils.TypeEnnemi;
+
 /**
  * Classe représentant un ennemi dans le jeu.
  * Hérite de la classe abstraite {@link Personnage} et ajoute des fonctionnalités spécifiques aux ennemis,
