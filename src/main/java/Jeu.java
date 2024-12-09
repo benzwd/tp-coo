@@ -15,8 +15,11 @@ public class Jeu {
     private Carte carte;
     private final List<Combat> combats = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(Jeu.class.getName());
+    private boolean modeTest = false;
     Faker faker = new Faker();
     ListeQuestions listeQuestions = new ListeQuestions("questions_culture_generale.csv");
+
+    public void activerModeTest() { this.modeTest = true; }
 
     /**
      * Démarre le jeu en initialisant le héros, la carte, et les combats.
@@ -171,7 +174,9 @@ public class Jeu {
             logger.info("Ennemis vaincus. Victoire.");
         }
         System.out.println("Merci d'avoir joué !");
-        System.exit(0);
+        if (!modeTest) {
+            System.exit(0);
+        }
     }
 
     /**
